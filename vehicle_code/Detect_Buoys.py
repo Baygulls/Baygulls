@@ -48,7 +48,8 @@ def get_centers(thresh, img_threshold_color):
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
     """The image should still have one of two possible values at each pixel."""
     contours, hierarchy = cv2.findContours(
-        img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+    )
     centers = []
     for contour in contours:
         center = np.mean(contour, axis=0)[0]
@@ -61,8 +62,9 @@ def get_centers(thresh, img_threshold_color):
 def find_angles(centers, res):
     angles = []
     for center in centers:
-        angle_for_center = get_angles(sensor_position(
-            center[0], center[1], res[0], res[1]))
+        angle_for_center = get_angles(
+            sensor_position(center[0], center[1], res[0], res[1])
+        )
         angles.append(angle_for_center)
     return angles
 
@@ -101,17 +103,17 @@ doPlots = False  # Plots from lab15
 if doPlots:
     fig, ax = plt.subplots()
     for frame_num in range(0, 20):
-        img = cv2.imread(f'buoy_simulation/frame_{frame_num:02d}.jpg')
+        img = cv2.imread(f"buoy_simulation/frame_{frame_num:02d}.jpg")
         img = np.flip(img, axis=2)  # Convert BGR to RGB
         g_centers, r_centers, g_angles, r_angles = detect_buoys(img)
         print("g_angles", g_angles)
-        print('\n')
+        print("\n")
         print("r_angles", r_angles)
         ax.clear()
         ax.imshow(img)
         for g_center in g_centers:
-            ax.plot(g_center[0], g_center[1], 'bo')
+            ax.plot(g_center[0], g_center[1], "bo")
         for r_center in r_centers:
-            ax.plot(r_center[0], r_center[1], 'ko')
+            ax.plot(r_center[0], r_center[1], "ko")
         plt.pause(0.0001)
         plt.draw()
