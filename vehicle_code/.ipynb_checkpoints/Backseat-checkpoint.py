@@ -105,7 +105,29 @@ class BackSeat():
         # STATE IN THE CONTROLLER!
         
         ### self.__autonomy.update_state() probably goes here!
-        pass
+        
+        # $BFNVG,133501.99,421330.43002,N,071280.32286,W,0,10.0,1.0,20.3,0.0,0.0,1626716101.99*58
+        
+        auv_states = []
+        
+        for i in len(msgs):
+            msg = msgs[i].split(",")
+            
+            if hex(BluefinMessages.checksum(cmd))[2:] == msg[10].split("*")[1]:
+                auv_state = {}
+                auv_state["Timestamp"] = msg[0]
+                auv_state["Latitude"] = (msg[1], msg[2])
+                auv_state["Longitude"] = (msg[3], msg[4])
+                auv_state["Quality"] = msg[5]
+                auv_state["Altitude"] = msg[6]
+                auv_state["Depth"] = msg[7]
+                auv_state["Heading"] = msg[8]
+                auv_state["Roll"] = msg[9]
+                auv_state["Pitch"] = msg[10]
+                auv_state["Solution"] = msg[10].split("*")[0]
+                auv_states[i] = auv_state
+                
+        self.__autonomy.update_state(auv_states)                
         
     def send_message(self, msg):
         print(f"sending message {msg}...")

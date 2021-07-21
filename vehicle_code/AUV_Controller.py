@@ -54,6 +54,7 @@ class AUVController():
         return self.__desired_heading
     
     
+    
     ### Private member functions
         
     # calculate the heading we want to go to reach the gate center
