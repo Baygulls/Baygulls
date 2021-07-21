@@ -2,13 +2,13 @@
 BWSI_BackSeat.py will call `detect_buoys()` and pass in the .jpg image with the resolution of
 640 x 360.
 
-(If we can only get images with a different resolution, 
+(If we can only get images with a different resolution,
 someone will need to add a line that will resize the image in the `detect_buoys` function)
 
 `detect_buoys()` will return g_centers, r_centers, g_angles, r_angles
 g_centers: a list of tuples. Each tuple contains a coordinate of the center of a green buoy detected
 r_centers: same as above, but with red buoys
-g_angles: a list of tuples. Each tuple contains the horizontal and vertical angle from the 
+g_angles: a list of tuples. Each tuple contains the horizontal and vertical angle from the
 camera sensor to the buoys
 r_angles: same as above, but with red buoys
 """
