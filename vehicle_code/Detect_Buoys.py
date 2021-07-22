@@ -2,11 +2,15 @@
 BWSI_BackSeat.py will call `detect_buoys()` and pass in the .jpg image with the resolution of
 640 x 360.
 
-`detect_buoys()` will return g_center, r_center, g_angles, r_angles
-g_center: an np array containing the x and y pixel coordinates of the largest green buoy detected
-r_center: same as above, but with red buoy
-g_angles: A tuple containing the horizontal and vertical angle from the camera sensor t
-o the largest green buoy detected
+(If we can only get images with a different resolution, 
+someone will need to add a line that will resize the image in the `detect_buoys` function)
+
+`detect_buoys()` will return g_centers, r_centers, g_angles, r_angles
+g_centers: a list of tuples. Each tuple contains a coordinate of the center of a green buoy detected, 
+in order of largest to smallest buoy
+r_centers: same as above, but with red buoys
+g_angles:A tuple containing the horizontal and vertical angle from the camera sensor to the 
+largest green buoy detected
 r_angles: same as above, but with red buoys
 """
 
@@ -34,76 +38,79 @@ def get_angles(sensor_pos):
     vertical_angle = np.arctan2(sensor_pos_y, f) * 180 / np.pi
     return (horizontal_angle, vertical_angle)
 
-def get_center(thresh, img_threshold_color):
-    # Convert to uint8 so we can find contours around buoys we want to detect
+def get_centers(thresh, img_threshold_color):
+    # Convert to uint8 so we can find contours around GREEN buoys we want to detect
     img8 = (img_threshold_color * 255 / np.max(img)).astype(np.uint8)
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
     """The image should still have one of two possible values at each pixel."""
     contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    center = None
-    if contours:
-        max_contour_size = 0 
-        idx_max_contour_size = None
-        for i, contour in enumerate(contours):
-            # contour_size = maximum difference in y and x values along the contour. 
-            contour_x = np.max(contour, axis=0)[0][0]
-            contour_y = np.max(contour, axis=0)[0][1]
-            contour_size = contour_x * contour_y
-            if contour_size > max_contour_size:
-                idx_max_contour_size = i
-        center = np.mean(contours[i], axis=0)[0]
-        # ^ Need to index 0 because np.mean(contour, axis=0)...
+    buoys = []
+    for contour in contours:
+        center = np.mean(contour, axis=0)[0]
+         # ^ Need to index 0 because np.mean(contour, axis=0)...
         # returns np.array([[mean]]) not np.array([mean])
-    return center 
+        contour_x = np.max(contour, axis=0)[0][0]
+        contour_y = np.max(contour, axis=0)[0][1]
+        contour_size = contour_x * contour_y
+        buoys.append((center, contour_size))
+    buoys = sorted(buoys, key=lambda x: x[1], reverse=True) # sort buoys by their size in descending order
+    centers = []
+    for center, contour_size in buoys:
+        centers.append(center)
+    print(centers)
+    return centers
 
-def find_angles(center, res):
-    if center is not None:
-        angles = get_angles(sensor_position(center[0], center[1], res[0], res[1]))
-    else:
-        angles = None
+def find_angles(centers, res):
+    angles = []
+    for center in centers:
+        angle_for_center = get_angles(sensor_position(center[0], center[1], res[0], res[1]))
+        angles.append(angle_for_center)
     return angles
 
 def detect_buoys(img):
     img = cv2.boxFilter(img, -1, (5, 5))
-    # Detect Green Buoy
+    # Find thresholds for Green Buoy
     filter_size = (10, 10) # P: may need to change when we get closer to buoy
     rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
     img_threshold_green = np.logical_and(rfilt > 0, rfilt < 120)
+
+    # Find thresholds for red buoy
     gfilt = cv2.boxFilter(img[:, :, 1], cv2.CV_32F, filter_size)
     img_threshold_red = np.logical_and(gfilt > 0, gfilt < 150)
     thresh = 0 # img_threshold_red values are either 0 or 1... 
     # but if we used cv2.boxFilter with normalize = False, the pixel values would have values...
     # in range of 0 to the size of the filter
 
-    g_center = get_center(thresh, img_threshold_green)
-    r_center = get_center(thresh, img_threshold_red)
-
+    # Get centers of the buoys using the thresholds
+    g_centers = get_centers(thresh, img_threshold_green)
+    r_centers = get_centers(thresh, img_threshold_red)
     res = img.shape # in the buoy_simulation photos, it was (480, 640, 3). 480 is y axis, 640 is x axis
     # print(res)
     res_x = res[1]
     res_y = res[0]
 
     # Get angles (horizontal and vertical) from the camera sensor to the buoys
-    g_angles = find_angles(g_center, (res_x, res_y)) # pass in resolution of image to calculate angles
-    r_angles = find_angles(r_center, (res_x, res_y))
-    return g_center, r_center, g_angles, r_angles
+    g_angles = find_angles(g_centers, (res_x, res_y)) # pass in resolution of image to calculate angles
+    r_angles = find_angles(r_centers, (res_x, res_y))
+    return g_centers, r_centers, g_angles, r_angles
 
-doPlots = False
-
+doPlots = False # Plots from lab15
 if doPlots:
     fig, ax = plt.subplots()
     for frame_num in range(0, 21):
         img = cv2.imread(f'buoy_simulation/frame_{frame_num:02d}.jpg')
-        g_center, r_center, g_angles, r_angles = detect_buoys(img)
-        print(g_angles)
+        # img = np.flip(img, axis=2) # Convert BGR to RGB
+        g_centers, r_centers, g_angles, r_angles = detect_buoys(img)
+        print("g_angles", g_angles)
         print('\n')
-        print(r_angles)
+        print("r_angles", r_angles)
         ax.clear()
-        ax.imshow(np.flip(img, axis=2)) # show img in RGB
-        if g_center is not None:
+        ax.imshow(np.flip(img, axis=2)) # plot in RGB
+        for g_center in g_centers:
             ax.plot(g_center[0], g_center[1], 'bo')
-        if r_center is not None:
+        for r_center in r_centers:
             ax.plot(r_center[0], r_center[1], 'ko')
         plt.pause(0.5)
         plt.draw()
+
