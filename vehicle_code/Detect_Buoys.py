@@ -55,7 +55,6 @@ def get_centers(thresh, img_threshold_color):
     centers = []
     for center, contour_size in buoys:
         centers.append(center)
-    print(centers)
     return centers
 
 def find_angles(centers, res):
@@ -83,7 +82,6 @@ def detect_buoys(img):
     g_centers = get_centers(thresh, img_threshold_green)
     r_centers = get_centers(thresh, img_threshold_red)
     res = img.shape # in the buoy_simulation photos, it was (480, 640, 3). 480 is y axis, 640 is x axis
-    # print(res)
     res_x = res[1]
     res_y = res[0]
 
