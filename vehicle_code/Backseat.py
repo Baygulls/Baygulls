@@ -113,18 +113,18 @@ class BackSeat():
         for i in len(msgs):
             msg = msgs[i].split(",")
             
-            if hex(BluefinMessages.checksum(cmd))[2:] == msg[10].split("*")[1]:
+            if hex(BluefinMessages.checksum(msgs[i][1:-3]))[2:] == msg[10].split("*")[1]:
                 auv_state = {}
-                auv_state["Timestamp"] = msg[0]
-                auv_state["Latitude"] = (msg[1], msg[2])
-                auv_state["Longitude"] = (msg[3], msg[4])
-                auv_state["Quality"] = msg[5]
-                auv_state["Altitude"] = msg[6]
-                auv_state["Depth"] = msg[7]
-                auv_state["Heading"] = msg[8]
-                auv_state["Roll"] = msg[9]
-                auv_state["Pitch"] = msg[10]
-                auv_state["Solution"] = msg[10].split("*")[0]
+                auv_state["Timestamp"] = msg[1]
+                auv_state["Latitude"] = (msg[2], msg[3])
+                auv_state["Longitude"] = (msg[4], msg[5])
+                auv_state["Quality"] = msg[6]
+                auv_state["Altitude"] = msg[7]
+                auv_state["Depth"] = msg[8]
+                auv_state["Heading"] = msg[9]
+                auv_state["Roll"] = msg[10]
+                auv_state["Pitch"] = msg[11]
+                auv_state["Solution"] = msg[12].split("*")[0]
                 auv_states[i] = auv_state
                 
         self.__autonomy.update_state(auv_states)                
