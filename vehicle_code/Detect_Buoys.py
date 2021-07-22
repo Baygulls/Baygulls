@@ -2,14 +2,11 @@
 BWSI_BackSeat.py will call `detect_buoys()` and pass in the .jpg image with the resolution of
 640 x 360.
 
-(If we can only get images with a different resolution, 
-someone will need to add a line that will resize the image in the `detect_buoys` function)
-
-`detect_buoys()` will return g_centers, r_centers, g_angles, r_angles
+`detect_buoys()` will return g_center, r_center, g_angles, r_angles
 g_center: an np array containing the x and y pixel coordinates of the largest green buoy detected
 r_center: same as above, but with red buoy
-g_angles: a list of tuples. Each tuple contains the horizontal and vertical angle from the 
-camera sensor to the buoys
+g_angles: A tuple containing the horizontal and vertical angle from the camera sensor t
+o the largest green buoy detected
 r_angles: same as above, but with red buoys
 """
 
@@ -38,7 +35,7 @@ def get_angles(sensor_pos):
     return (horizontal_angle, vertical_angle)
 
 def get_center(thresh, img_threshold_color):
-    # Convert to uint8 so we can find contours around GREEN buoys we want to detect
+    # Convert to uint8 so we can find contours around buoys we want to detect
     img8 = (img_threshold_color * 255 / np.max(img)).astype(np.uint8)
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
@@ -92,12 +89,11 @@ def detect_buoys(img):
     r_angles = find_angles(r_center, (res_x, res_y))
     return g_center, r_center, g_angles, r_angles
 
-doPlots = True
+doPlots = False
 
 if doPlots:
     fig, ax = plt.subplots()
     for frame_num in range(0, 21):
-    # frame_num = 20
         img = cv2.imread(f'buoy_simulation/frame_{frame_num:02d}.jpg')
         g_center, r_center, g_angles, r_angles = detect_buoys(img)
         print(g_angles)
@@ -111,4 +107,3 @@ if doPlots:
             ax.plot(r_center[0], r_center[1], 'ko')
         plt.pause(0.5)
         plt.draw()
-        # plt.show()
