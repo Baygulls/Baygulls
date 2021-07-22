@@ -12,7 +12,6 @@ g_angles: a list of tuples. Each tuple contains the horizontal and vertical angl
 camera sensor to the buoys
 r_angles: same as above, but with red buoys
 """
-
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
