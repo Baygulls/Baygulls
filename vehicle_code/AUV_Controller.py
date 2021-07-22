@@ -89,10 +89,10 @@ class AUVController():
         turn_command = "STANDARD RUDDER"
         
         # which way do we have to turn
-        if delta_angle>2: # need to turn to right!
+        if delta_angle > 2: # need to turn to right!
             if self.__rudder >= 0: # rudder is turning to the left
                 cmd = f"RIGHT {turn_command}"
-        elif delta_angle<-2: # need to turn to left!
+        elif delta_angle < -2: # need to turn to left!
             if self.__rudder <= 0: # rudder is turning right!
                 cmd = f"LEFT {turn_command}"
         else: #close enough!
