@@ -9,7 +9,7 @@ import sys
 import numpy as np
 
 
-class AUVController():
+class AUVController:
     def __init__(self):
 
         # initialize state information
@@ -22,28 +22,27 @@ class AUVController():
         self.__desired_heading = None
 
     def initialize(self, auv_state):
-        self.__heading = auv_state['heading']
-        self.__speed = auv_state['speed']
-        self.__rudder = auv_state['rudder']
-        self.__position = auv_state['position']
+        self.__heading = auv_state["heading"]
+        self.__speed = auv_state["speed"]
+        self.__rudder = auv_state["rudder"]
+        self.__position = auv_state["position"]
 
         # assume we want to be going the direction we're going for now
-        self.__desired_heading = auv_state['heading']
+        self.__desired_heading = auv_state["heading"]
 
     def update_state(self, auv_states):
         most_recent_msg = auv_states[-1]
-        self.__heading = most_recent_msg['heading']
+        self.__heading = most_recent_msg["heading"]
 
     # Public member functions
     def decide(self, green_buoys, red_buoys):
         # determine what heading we want to go
-        self.__desired_heading = self.__heading_to_angle(
-            green_buoys, red_buoys)
+        self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
 
         # determine whether and what command to issue to desired heading
         cmd = self.__select_command()
         # P: NEED TO FIX. Supposed to update rudder
-        self.__rudder = self.__select_command().split(',')[2]
+        self.__rudder = self.__select_command().split(",")[2]
         return cmd
 
     # return the desired heading to a public requestor
@@ -56,11 +55,19 @@ class AUVController():
 
     def __heading_to_position(self, gnext, rnext):
         # center of the next buoy pair
-        gate_center = ((gnext[0]+rnext[0])/2.0, (gnext[1]+rnext[1])/2.0)
+        gate_center = ((gnext[0] + rnext[0]) / 2.0, (gnext[1] + rnext[1]) / 2.0)
 
         # heading to gate_center
-        tgt_hdg = np.mod(np.degrees(np.arctan2(gate_center[0]-self.__position[0],
-                                               gate_center[1]-self.__position[1]))+360, 360)
+        tgt_hdg = np.mod(
+            np.degrees(
+                np.arctan2(
+                    gate_center[0] - self.__position[0],
+                    gate_center[1] - self.__position[1],
+                )
+            )
+            + 360,
+            360,
+        )
 
         return tgt_hdg
 
@@ -102,7 +109,7 @@ class AUVController():
 
         # Convert command to $BPRMB request
         # get direction and rudder position from cmd
-        direction, position = cmd.split(' ')[:2]
+        direction, position = cmd.split(" ")[:2]
         if position == "STANDARD":
             position = 15
         elif position == "FULL":
@@ -111,7 +118,9 @@ class AUVController():
             position = 35
 
         if direction == "RIGHT":
-            new_rudder = -position  # for some reason turning right has a negative angle on Sandshark
+            new_rudder = (
+                -position
+            )  # for some reason turning right has a negative angle on Sandshark
         else:
             new_rudder = position
 
