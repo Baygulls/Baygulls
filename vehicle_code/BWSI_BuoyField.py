@@ -117,14 +117,14 @@ class BuoyField(object):
         np.random.seed(2021)
         
         random_samples = np.random.random((nGates, 1))
-        green_buoy = list()
-        red_buoy = list()
+        green_buoy = []
+        red_buoy = []
         
         if (config['style'].lower() == 'linear'):
             gate_max_offset = config['max_offset']
             hdg = np.radians(config['heading'])
-            green_buoy = list()
-            red_buoy = list()
+            green_buoy = []
+            red_buoy = []
             for i in range(nGates):
                 # space the gates by gate_spacing
                 Y = (i+1)*gate_spacing
@@ -285,8 +285,8 @@ class BuoyField(object):
         
         assert len(green) == len(red), "Should be equal number of green and red buoys"
         assert position_style=='P' or position_style=='L', f"Unknown position style {position_style}"
-        self.__green_buoys = list()
-        self.__red_buoys = list()
+        self.__green_buoys = []
+        self.__red_buoys = []
         for i in range(len(green)):
             if position_style == 'P':
                 self.__green_buoys.append(Buoy(self.__datum, position=green[i]))
@@ -314,8 +314,8 @@ class BuoyField(object):
         return dist
         
     def get_buoy_positions(self):
-        G = list()
-        R = list()
+        G = []
+        R = []
         for green in self.__green_buoys:
             G.append(green.get_position())
         for red in self.__red_buoys:
@@ -323,8 +323,8 @@ class BuoyField(object):
         return (G,R)
     
     def get_buoy_latlon(self):
-        G = list()
-        R = list()
+        G = []
+        R = []
         for green in self.__green_buoys:
             G.append(green.get_latlon())
         for red in self.__red_buoys:
@@ -356,7 +356,7 @@ class BuoyField(object):
                          angle_right,
                          sensor_type='POSITION'):
         # note: angle_left and angle_right are mod 360
-        G = list()
+        G = []
         for green in self.__green_buoys:
             gpos = green.get_position()
             rng = np.sqrt( (position[0]-gpos[0])**2 + (position[1]-gpos[1])**2 )
@@ -388,7 +388,7 @@ class BuoyField(object):
                         else:
                             sys.exit()
                     
-        R = list()
+        R = []
         for red in self.__red_buoys:
             rpos = red.get_position()
             rng = np.sqrt( (position[0]-rpos[0])**2 + (position[1]-rpos[1])**2 )

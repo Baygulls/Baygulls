@@ -72,7 +72,7 @@ class Sandshark(object):
         self.__roll = 0.0
         self.__yaw = 0.0
         
-        self.__rudder_history = list() # history of rudder commands
+        self.__rudder_history = [] # history of rudder commands
         
         ######
         ## sensors
