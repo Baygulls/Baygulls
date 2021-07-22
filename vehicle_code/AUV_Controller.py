@@ -29,24 +29,18 @@ class AUVController():
         # assume we want to be going the direction we're going for now
         self.__desired_heading = auv_state['heading']
 
-    ### Public member functions    
-    def decide(self, auv_state, green_buoys, red_buoys, sensor_type='POSITION'):
+    def update_state(self, auv_states):
+        most_recent_msg = auv_states[-1] 
+        self.__heading = most_recent_msg['heading']
 
-        # update state information
-        self.__heading = auv_state['heading']
-        self.__speed = auv_state['speed']
-        self.__rudder = auv_state['rudder']
-        self.__position = auv_state['position']
-                
+    ### Public member functions    
+    def decide(self, green_buoys, red_buoys):
         # determine what heading we want to go
-        if sensor_type.upper() == 'POSITION': # known positions of buoys
-            self.__desired_heading = self.__heading_to_position(green_buoys, red_buoys)
-        elif sensor_type.upper() == 'ANGLE': # camera sensor
-            self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
-        
+        self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
+
         # determine whether and what command to issue to desired heading               
         cmd = self.__select_command()
-        
+        self.__rudder = self.__select_command().split(',')[2] # P: NEED TO FIX. Supposed to update rudder
         return cmd
         
     # return the desired heading to a public requestor
@@ -95,13 +89,35 @@ class AUVController():
         
         # which way do we have to turn
         if delta_angle>2: # need to turn to right!
-            if self.__rudder >= 0: # rudder is turning the other way!
+            if self.__rudder >= 0: # rudder is turning to the left
                 cmd = f"RIGHT {turn_command}"
         elif delta_angle<-2: # need to turn to left!
-            if self.__rudder <= 0: # rudder is turning the other way!
+            if self.__rudder <= 0: # rudder is turning right!
                 cmd = f"LEFT {turn_command}"
         else: #close enough!
             cmd = "RUDDER AMIDSHIPS"
         
+        # Convert command to $BPRMB request
+        direction, position = cmd.split(' ')[:2] # get direction and rudder position from cmd
+        if position == "STANDARD":
+            position = 15
+        elif position == "FULL":
+            position = 30
+        elif position == "HARD":
+            position = 35
+   
+        if direction == "RIGHT":
+            new_rudder = -position # for some reason turning right has a negative angle on Sandshark
+        else:
+            new_rudder = position
+
+        change_rudder_by = new_rudder - self.__rudder
+        cmd = f"BPRMB,hhmmss,{change_rudder_by},,,,,1" # Note: Need to change hhmmss in backseat
+        # hhmmss.ss, Variable precision heading in degrees, 
+        # Variable precision depth or altitude in meters, Depth mode, 
+        # RPM or m/s of thruster, Speed mode (0 signifies previous mode was in RPM, 
+        # 1 signifies previous mode was in m/s), 
+        # Horizontal mode (0 signifies the first field is a heading; 1 signifies a rudder adjustment)
+
         return cmd
     
