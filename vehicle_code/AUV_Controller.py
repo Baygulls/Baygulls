@@ -50,9 +50,9 @@ class AUVController:
     # return the desired heading to a public requestor
     def get_desired_heading(self):
         return self.__desired_heading
-
+    
     # Private member functions
-
+    
     # calculate the heading we want to go to reach the gate center
     def __heading_to_position(self, gnext, rnext):
         # center of the next buoy pair

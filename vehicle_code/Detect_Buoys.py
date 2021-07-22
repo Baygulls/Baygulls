@@ -70,7 +70,7 @@ def detect_buoys(img):
     img = cv2.boxFilter(img, -1, (5, 5))
     # Find thresholds for Green Buoy
     filter_size = (10, 10)  # P: may need to change when we get closer to buoy
-    rfilt = cv2.boxFilter(img[:, :, 0], cv2.CV_32F, filter_size)
+    rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
     img_threshold_green = np.logical_and(rfilt > 0, rfilt < 120)
 
     # Find thresholds for red buoy
@@ -96,18 +96,18 @@ def detect_buoys(img):
     return g_centers, r_centers, g_angles, r_angles
 
 
-doPlots = False  # Plots from lab15
+doPlots = True  # Plots from lab15
 if doPlots:
     fig, ax = plt.subplots()
     for frame_num in range(0, 20):
         img = cv2.imread(f"buoy_simulation/frame_{frame_num:02d}.jpg")
-        img = np.flip(img, axis=2)  # Convert BGR to RGB
+        # img = np.flip(img, axis=2) # Convert BGR to RGB
         g_centers, r_centers, g_angles, r_angles = detect_buoys(img)
         print("g_angles", g_angles)
         print("\n")
         print("r_angles", r_angles)
         ax.clear()
-        ax.imshow(img)
+        ax.imshow(np.flip(img, axis=2))  # plot in RGB
         for g_center in g_centers:
             ax.plot(g_center[0], g_center[1], "bo")
         for r_center in r_centers:
