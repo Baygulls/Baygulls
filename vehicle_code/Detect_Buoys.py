@@ -13,9 +13,9 @@ camera sensor to the buoys
 r_angles: same as above, but with red buoys
 """
 
-import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # res_x = img.shape[0]; res_y = img.shape[1]
