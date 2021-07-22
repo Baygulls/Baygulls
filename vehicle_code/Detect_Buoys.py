@@ -2,15 +2,12 @@
 BWSI_BackSeat.py will call `detect_buoys()` and pass in the .jpg image with the resolution of
 640 x 360.
 
-(If we can only get images with a different resolution, 
-someone will need to add a line that will resize the image in the `detect_buoys` function)
-
 `detect_buoys()` will return g_centers, r_centers, g_angles, r_angles
 g_centers: a list of tuples. Each tuple contains a coordinate of the center of a green buoy detected, 
 in order of largest to smallest buoy
 r_centers: same as above, but with red buoys
-g_angles:A tuple containing the horizontal and vertical angle from the camera sensor to the 
-largest green buoy detected
+g_angles: A list of tuples containing the horizontal and vertical angle from the camera sensor to the 
+green buoys detected in order of largest to smallest buoy
 r_angles: same as above, but with red buoys
 """
 
@@ -39,7 +36,7 @@ def get_angles(sensor_pos):
     return (horizontal_angle, vertical_angle)
 
 def get_centers(thresh, img_threshold_color):
-    # Convert to uint8 so we can find contours around GREEN buoys we want to detect
+    # Convert to uint8 so we can find contours around buoys we want to detect
     img8 = (img_threshold_color * 255 / np.max(img)).astype(np.uint8)
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
