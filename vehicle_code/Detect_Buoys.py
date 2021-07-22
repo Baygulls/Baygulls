@@ -40,7 +40,7 @@ def get_centers(thresh, img_threshold_color):
     img8 = (img_threshold_color * 255 / np.max(img)).astype(np.uint8)
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
-    """The image should still have one of two possible values at each pixel."""
+    # The image should still have one of two possible values at each pixel.
     contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     buoys = []
     for contour in contours:

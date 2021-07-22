@@ -129,7 +129,7 @@ class BackSeat():
                 auv_state["Roll"] = msg[10]
                 auv_state["Pitch"] = msg[11]
                 auv_state["Solution"] = msg[12].split("*")[0]
-                auv_states[i] = auv_state
+                auv_states.append(auv_state)
                 
         self.__autonomy.update_state(auv_states)                
         

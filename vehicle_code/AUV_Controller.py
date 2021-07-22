@@ -21,6 +21,8 @@ class AUVController:
 
         # assume we want to be going the direction we're going for now
         self.__desired_heading = None
+        self.__gnext = None
+        self.__rnext = None
 
     def initialize(self, auv_state):
         self.__heading = auv_state["heading"]
@@ -36,10 +38,16 @@ class AUVController:
         self.__heading = most_recent_msg["heading"]
 
     # Public member functions
-    def decide(self, green_buoys, red_buoys):
+    def decide(self, green_buoys=None, red_buoys=None):
         # determine what heading we want to go
+        if type(green_buoys) == list:
+            self.__gnext = green_buoys[0]
+            
+        if type(red_buoys) == list:
+            self.__rnext = red_buoys[0]
+            
         self.__desired_heading = self.__heading_to_angle(
-            green_buoys, red_buoys)
+            self.__gnext, self.__rnext)
 
         # determine whether and what command to issue to desired heading
         cmd = self.__select_command()
@@ -73,10 +81,19 @@ class AUVController:
 
     def __heading_to_angle(self, gnext, rnext):
         # relative angle to the center of the next buoy pair
-        relative_angle = (gnext[0] + rnext[0]) / 2.0
+        if gnext is None:
+            gnext = rnext
+            
+        if rnext is None:
+            rnext = gnext
+            
+        tgt_hdg = self.__heading
+        
+        if gnext is not None and rnext is not None:
+            relative_angle = (gnext[0] + rnext[0]) / 2.0
 
-        # heading to center of the next buoy pair
-        tgt_hdg = self.__heading + relative_angle
+            # heading to center of the next buoy pair
+            tgt_hdg += relative_angle
 
         return tgt_hdg
 
