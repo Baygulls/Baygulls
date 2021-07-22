@@ -54,7 +54,6 @@ class AUVController:
     # Private member functions
 
     # calculate the heading we want to go to reach the gate center
-
     def __heading_to_position(self, gnext, rnext):
         # center of the next buoy pair
         gate_center = ((gnext[0] + rnext[0]) / 2.0,
