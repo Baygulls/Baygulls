@@ -36,7 +36,7 @@ def get_angles(sensor_pos):
     return (horizontal_angle, vertical_angle)
 
 
-def get_center(thresh, img_threshold_color):
+def get_centers(thresh, img_threshold_color):
     # Convert to uint8 so we can find contours around buoys we want to detect
     img8 = (img_threshold_color * 255 / np.max(img)).astype(np.uint8)
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
