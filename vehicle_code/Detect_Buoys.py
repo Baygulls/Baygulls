@@ -46,8 +46,9 @@ def get_centers(thresh, img_threshold_color):
     thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
     thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
     """The image should still have one of two possible values at each pixel."""
-    contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL,
-                                           cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(
+        img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+    )
     centers = []
     for contour in contours:
         center = np.mean(contour, axis=0)[0]
@@ -61,7 +62,8 @@ def find_angles(centers, res):
     angles = []
     for center in centers:
         angle_for_center = get_angles(
-            sensor_position(center[0], center[1], res[0], res[1]))
+            sensor_position(center[0], center[1], res[0], res[1])
+        )
         angles.append(angle_for_center)
     return angles
 
