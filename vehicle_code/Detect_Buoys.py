@@ -17,7 +17,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-def sensor_position(pix_x, pix_y, res_x=3280, res_y=2464): # res_x = img.shape[0]; res_y = img.shape[1]
+def sensor_position(pix_x, pix_y, res_x, res_y): # res_x = img.shape[0]; res_y = img.shape[1]
     x = 3.68 # length of camera sensor in mm
     y = 2.76 # height of camera sensor in mm
     # adjust pixel coordinate system so (0, 0) is in the center of the camera sensor, 
@@ -60,9 +60,9 @@ def get_center(thresh, img_threshold_color):
         # returns np.array([[mean]]) not np.array([mean])
     return center 
 
-def find_angles(center):
+def find_angles(center, res):
     if center is not None:
-        angles = get_angles(sensor_position(center[0], center[1]))
+        angles = get_angles(sensor_position(center[0], center[1], res[0], res[1]))
     else:
         angles = None
     return angles
@@ -79,17 +79,20 @@ def detect_buoys(img):
     # but if we used cv2.boxFilter with normalize = False, the pixel values would have values...
     # in range of 0 to the size of the filter
 
-    # avg_red_buoy_pos = np.average((np.argwhere(img_threshold_red>thresh)), axis=0)
-    # avg_green_buoy_pos = np.average((np.argwhere(img_threshold_green>thresh)), axis=0)
-    # Only works if there's only one buoy corrected, so we'll need to detect contours
-
     g_center = get_center(thresh, img_threshold_green)
     r_center = get_center(thresh, img_threshold_red)
-    g_angles = find_angles(g_center)
-    r_angles = find_angles(r_center)
+
+    res = img.shape # in the buoy_simulation photos, it was (480, 640, 3). 480 is y axis, 640 is x axis
+    # print(res)
+    res_x = res[1]
+    res_y = res[0]
+
+    # Get angles (horizontal and vertical) from the camera sensor to the buoys
+    g_angles = find_angles(g_center, (res_x, res_y)) # pass in resolution of image to calculate angles
+    r_angles = find_angles(r_center, (res_x, res_y))
     return g_center, r_center, g_angles, r_angles
 
-doPlots = False
+doPlots = True
 
 if doPlots:
     fig, ax = plt.subplots()
