@@ -32,7 +32,7 @@ class AUVController():
         self.__desired_heading = auv_state['heading']
 
     ### Public member functions    
-    def decide(self, auv_state, green_buoys, red_buoys, sensor_type='POSITION'):
+    def decide(self, auv_state, green_buoys, red_buoys, sensor_type='ANGLE'):
 
         # update state information
         self.__heading = auv_state['heading']
