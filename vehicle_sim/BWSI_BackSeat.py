@@ -89,6 +89,7 @@ class BackSeat():
                 
                 
                 ### self.__autonomy.decide() probably goes here!
+                self.__autonomy.decide()
                 ### ---------------------------------------------------------- #
                 
                 ### turn your output message into a BPRMB request! 

@@ -19,6 +19,8 @@ class AUVController():
         
         # assume we want to be going the direction we're going for now
         self.__desired_heading = None
+        self.__gnext = None
+        self.__rnext = None
         
     def initialize(self, auv_state):
         self.__heading = auv_state['heading']
@@ -59,21 +61,31 @@ class AUVController():
     # calculate the heading we want to go to reach the gate center
     def __heading_to_position(self, gnext, rnext):
         # center of the next buoy pair
-        gate_center = ((gnext[0]+rnext[0])/2.0, (gnext[1]+rnext[1])/2.0)
+        gate_center = ((self.__gnext[0]+self.__rnext[0])/2.0, (self.__gnext[1]+self.__rnext[1])/2.0)
         
         # heading to gate_center
         tgt_hdg = np.mod(np.degrees(np.arctan2(gate_center[0]-self.__position[0],
                                                gate_center[1]-self.__position[1]))+360,360)
         
         return tgt_hdg
-    
+
     def __heading_to_angle(self, gnext, rnext):
         # relative angle to the center of the next buoy pair
-        relative_angle = (gnext[0] + rnext[0]) / 2.0
+        relative_angle = 0
+        if gnext is None:
+            gnext = rnext
+            
+        if rnext is None:
+            rnext = gnext
+            
+        tgt_hdg = self.__heading
         
-        # heading to center of the next buoy pair        
-        tgt_hdg = self.__heading + relative_angle
-        
+        if gnext is not None and rnext is not None:
+            relative_angle = (gnext[0] + rnext[0]) / 2.0
+
+            # heading to center of the next buoy pair
+        tgt_hdg += relative_angle
+
         return tgt_hdg
 
     # choose a command to send to the front seat
@@ -93,15 +105,39 @@ class AUVController():
         ## will improve performance!
         turn_command = "STANDARD RUDDER"
         
-        # which way do we have to turn
-        if delta_angle>2: # need to turn to right!
-            if self.__rudder >= 0: # rudder is turning the other way!
+        if delta_angle > 2:  # need to turn to right!
+            if self.__rudder >= 0:  # rudder is turning to the left
                 cmd = f"RIGHT {turn_command}"
-        elif delta_angle<-2: # need to turn to left!
-            if self.__rudder <= 0: # rudder is turning the other way!
+        elif delta_angle < -2:  # need to turn to left!
+            if self.__rudder <= 0:  # rudder is turning right!
                 cmd = f"LEFT {turn_command}"
-        else: #close enough!
+        else:  # close enough!
             cmd = "RUDDER AMIDSHIPS"
-        
+
+        # Convert command to $BPRMB request
+        # get direction and rudder position from cmd
+        direction, position = cmd.split(" ")[:2]
+        if position == "STANDARD":
+            position = 15
+        elif position == "FULL":
+            position = 30
+        elif position == "HARD":
+            position = 35
+
+        if direction == "RIGHT":
+            new_rudder = (
+                -position
+            )  # for some reason turning right has a negative angle on Sandshark
+        else:
+            new_rudder = position
+
+        change_rudder_by = new_rudder - self.__rudder
+        # Note: Need to change hhmmss in backseat
+        cmd = f"BPRMB,hhmmss,{change_rudder_by},,,,,1"
+        # hhmmss.ss, Variable precision heading in degrees,
+        # Variable precision depth or altitude in meters, Depth mode,
+        # RPM or m/s of thruster, Speed mode (0 signifies previous mode was in RPM,
+        # 1 signifies previous mode was in m/s),
+        # Horizontal mode (0 signifies the first field is a heading; 1 signifies a rudder adjustment)
+
         return cmd
-    
