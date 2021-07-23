@@ -95,7 +95,7 @@ class SandsharkServer():
             
     def __listener_thread(self, client):
         done = False
-        msg_list = list()
+        msg_list = []
         while not done:
             data = client.recv(self.__PACKET_SIZE)
         
@@ -110,7 +110,7 @@ class SandsharkServer():
         
     # interpret the received strings
     def receive_mail(self):
-        your_mail = list()
+        your_mail = []
         while not self.__incoming.empty():
             msg = self.__incoming.get()
             your_mail.append(msg)
@@ -177,7 +177,7 @@ class SandsharkClient():
         
     # pick up whatever messages have been accumulated since last request
     def receive_mail(self):        
-        your_mail = list()
+        your_mail = []
         while not self.__incoming.empty():
             msg = self.__incoming.get()
             your_mail.append(msg)
@@ -191,7 +191,7 @@ class SandsharkClient():
             
     def __listener_thread(self, client):
         done = False
-        msg_list = list()
+        msg_list = []
         while not done:
             data = client.recv(self.__PACKET_SIZE)
         
