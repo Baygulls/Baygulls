@@ -12,9 +12,10 @@ import sys
 import time
 import threading
 import datetime
-from picamera import PiCamera
-from picamera.array import PiRGBArray
+# from picamera import PiCamera
+# from picamera.array import PiRGBArray
 import cv2
+import numpy as np
 
 from AUV_Controller import AUVController
 from pynmea2 import pynmea2
@@ -41,8 +42,8 @@ class BackSeat():
             msg = BluefinMessages.BPLOG('ALL', 'ON')
             self.send_message(msg)
             
-            camera = PiCamera()
-            capture = PiRGBArray(camera)
+            # camera = PiCamera()
+            # capture = PiRGBArray(camera)
             
             while True:
                 now = time.time()
@@ -52,18 +53,23 @@ class BackSeat():
                 self.__current_time += delta_time
                 
                 msgs = self.get_mail()
-                camera.capture(capture, format="bgr")
+                
                 
                 if len(msgs) > 0:
                     print("\nReceived from front seat:")
                     
                     for msg in msgs:
                         print(f"{str(msg, 'utf-8')}")
-                        
-                buoys = Detect_Buoys.detect_buoys(cv2.resize(capture.array, (640, 360)))
+                # UNCOMMENT THE FOLLOWING LINES ONCE WE DEPLOY CODE ON RASPBERRY PI
+                # camera.capture(capture, format="bgr")
+                # buoys = Detect_Buoys.detect_buoys(cv2.resize(capture.array, (640, 360)))
+                g_centers = [np.array([123.13333333, 383.86666667])]
+                r_centers = [np.array([1052.97752809,  303.44382022]), np.array([670.12903226, 406.06451613])]
+                g_angles = [(-26.39532577318937, -6.32962095448399)]
+                r_angles = [(18.08203072496716, -10.358707340535199), (-0.7031573062995208, -5.204641813698806)]
+                
+                buoys = (g_centers, r_centers, g_angles, r_angles)
                 time.sleep(1 / self.__warp)
-
-                ### self.__autonomy.decide() probably goes here!
                 
                 self.process_messages(msgs)
                 self.__autonomy.decide(green_buoys=buoys[2], red_buoys=buoys[3])
