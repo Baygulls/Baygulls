@@ -17,6 +17,7 @@ import cv2
 from BWSI_BuoyField import BuoyField
 from BWSI_Sensor import BWSI_Camera
 
+import Detect_Buoys 
 
 class ImageProcessor():
     def __init__(self, camera='PICAM', log_dir='./'):
@@ -36,7 +37,7 @@ class ImageProcessor():
     
     # ------------------------------------------------------------------------ #
     # Run an iteration of the image processor. 
-    # The sim version needs the auv state ot generate simulated imagery
+    # The sim version needs the auv state to generate simulated imagery
     # the PICAM does not need any auv_state input
     # ------------------------------------------------------------------------ #
     def run(self, auv_state=None):
@@ -69,5 +70,5 @@ class ImageProcessor():
             cv2.imwrite(str(fn), image)
         
             # process and find the buoys!
-        
-        return red, green
+            g_centers, r_centers, green, red = Detect_Buoys.detect_buoys(image)
+        return green, red

@@ -80,15 +80,16 @@ class BackSeat():
 
                 ### ---------------------------------------------------------- #
                 ### Here should be the request for a photo from the camera
-                ### img = self.__camera.acquire_image()
+                # img = self.__camera.acquire_image() # P: Idk where is self.__camera besides 
+                # in the Image_Processor class
                 ###
                 ### Here you process the image and return the angles to target
-                ### green, red = self.__detect_buoys(img)
-                self.__buoy_detector.run(self.__auv_state)
+                green, red = self.__buoy_detector.run(self.__auv_state)
+                # print(green, red)
                 ### ---------------------------------------------------------- #
                 
                 
-                ### self.__autonomy.decide() probably goes here!
+                self.__autonomy.decide(self.__auv_state, green, red)
                 ### ---------------------------------------------------------- #
                 
                 ### turn your output message into a BPRMB request! 
@@ -133,6 +134,7 @@ class BackSeat():
                 
                 
         except:
+            print("Unexpected error:", sys.exc_info()[0])
             self.__client.cleanup()
             client.join()
           
