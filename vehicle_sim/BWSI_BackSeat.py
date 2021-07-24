@@ -52,7 +52,7 @@ class BackSeat():
         # set to PICAM for the real camera
         self.__buoy_detector = ImageProcessor(camera='SIM')
         self.__autonomy = AUVController()
-    
+
     def run(self):
         try:
             # connect the client
@@ -91,18 +91,44 @@ class BackSeat():
                 ### ---------------------------------------------------------- #
                 
                 
-                cmd = self.__autonomy.decide(self.__auv_state, green, red)
+                change_rudder_by = self.__autonomy.decide(self.__auv_state, green, red)
                 ### ---------------------------------------------------------- #
                 
                 ### turn your output message into a BPRMB request! 
 
                 time.sleep(1/self.__warp)
 
+                if True:
+                    if not engine_started and (self.__current_time - self.__start_time) > 3:
+                        ## We want to change the speed. For now we will always use the RPM (1500 Max)
+                        self.__current_time = datetime.datetime.utcnow().timestamp()
+                        # This is the timestamp format from NMEA: hhmmss.ss
+                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+                        cmd = f"BPRMB,{hhmmss},0,,,1000,0,1"
+                        # NMEA requires a checksum on all the characters between the $ and the *
+                        # you can use the BluefinMessages.checksum() function to calculate
+                        # and write it like below. The checksum goes after the *
+                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
+                        self.send_message(msg)
+                        engine_started = True
+                    else:
+                        self.__current_time = datetime.datetime.utcnow().timestamp()
+                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+                        if change_rudder_by is None:
+                            cmd = f"BPRMB,{hhmmss},,,,1000,0,1"
+                        else:
+                            cmd = f"BPRMB,{hhmmss},{change_rudder_by},,,1000,0,1"
+                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
+                        self.send_message(msg)
+                        turned = True
+                        if change_rudder_by is not None:
+                            self.__auv_state['rudder'] += change_rudder_by 
+                            # ^update self.__rudder after we send the msg
                 
                 # ------------------------------------------------------------ #
                 # ----This is example code to show commands being issued
                 # ------------------------------------------------------------ #
-                if True:
+                if False:
                     print(f"{self.__current_time - self.__start_time}")
                     if not engine_started and (self.__current_time - self.__start_time) > 3:
                         ## We want to change the speed. For now we will always use the RPM (1500 Max)
