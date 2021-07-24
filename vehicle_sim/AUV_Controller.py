@@ -46,9 +46,12 @@ class AUVController():
         elif sensor_type.upper() == 'ANGLE': # camera sensor
             self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
         
-        # determine whether and what command to issue to desired heading               
-        cmd = self.__select_command()
-        
+        if self.__desired_heading is not None:
+            # determine whether and what command to issue to desired heading               
+            cmd = self.__select_command()
+        else:
+            cmd = None
+
         return cmd
         
     # return the desired heading to a public requestor
@@ -70,22 +73,28 @@ class AUVController():
         return tgt_hdg
 
     def __heading_to_angle(self, gnext, rnext):
-        # relative angle to the center of the next buoy pair
-        relative_angle = 0
-        if gnext is None:
-            gnext = rnext
-            
-        if rnext is None:
-            rnext = gnext
-            
-        tgt_hdg = self.__heading
+        # pass rnext on port side
+        # pass gnext on starboard side
+        print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
+        # which are measured clockwise from the heading of the AUV.
+
+        # rnext and gnext are in this format. We only need the horizontal angle to the buoy,
+        # which is why we get the horizontal angle by doing gnext[0][0]
         
-        if gnext is not None and rnext is not None:
-            relative_angle = (gnext[0] + rnext[0]) / 2.0
+        # rnext: [(-2.6533087248159455, -5.348725386576375)]
+        # gnext:  [(8.445588240799415, -5.304815966173086)]
 
-            # heading to center of the next buoy pair
-        tgt_hdg += relative_angle
-
+        # if angle in gnext is larger than 220 and len(gnext) > 1, get normal angle
+        if gnext and rnext:
+            relative_angle = (gnext[0][0] + rnext[0][0]) / 2.0
+            # heading to center of the next buoy pair   
+            tgt_hdg = self.__heading + relative_angle
+        elif gnext:
+            tgt_hdg = self.__heading + gnext[0][0]
+        elif rnext:
+            tgt_hdg = self.__heading + rnext[0][0]
+        else: # see no buoys
+            tgt_hdg = self.__heading
         return tgt_hdg
 
     # choose a command to send to the front seat
@@ -113,26 +122,27 @@ class AUVController():
                 cmd = f"LEFT {turn_command}"
         else:  # close enough!
             cmd = "RUDDER AMIDSHIPS"
-
+            change_rudder_by = 0
         # Convert command to $BPRMB request
         # get direction and rudder position from cmd
-        direction, position = cmd.split(" ")[:2]
-        if position == "STANDARD":
-            position = 15
-        elif position == "FULL":
-            position = 30
-        elif position == "HARD":
-            position = 35
 
-        if direction == "RIGHT":
-            new_rudder = (
-                -position
-            )  # for some reason turning right has a negative angle on Sandshark
-        else:
-            new_rudder = position
+        if len(cmd.split(" ")) == 3:
+            direction, position = cmd.split(" ")[:2]
+            if position == "STANDARD":
+                position = 15
+            elif position == "FULL":
+                position = 30
+            elif position == "HARD":
+                position = 35
 
-        change_rudder_by = new_rudder - self.__rudder
-        # Note: Need to change hhmmss in backseat
+            if direction == "RIGHT":
+                new_rudder = (-position)  # for some reason turning right has a negative angle on Sandshark
+            else:
+                new_rudder = position
+
+            change_rudder_by = new_rudder - self.__rudder
+       
+        # Note: Need to change hhmmss in backsea
         cmd = f"BPRMB,hhmmss,{change_rudder_by},,,,,1"
         # hhmmss.ss, Variable precision heading in degrees,
         # Variable precision depth or altitude in meters, Depth mode,

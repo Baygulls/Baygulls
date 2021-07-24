@@ -41,7 +41,9 @@ class BackSeat():
             ('altitude', None),
             ('roll', None),
             ('pitch', None),
-            ('last_fix_time', None)
+            ('last_fix_time', None),
+            ('speed', None),
+            ('rudder', 0)
             ])
         
         # we'll use the first navigation update as datum
@@ -89,7 +91,7 @@ class BackSeat():
                 ### ---------------------------------------------------------- #
                 
                 
-                self.__autonomy.decide(self.__auv_state, green, red)
+                cmd = self.__autonomy.decide(self.__auv_state, green, red)
                 ### ---------------------------------------------------------- #
                 
                 ### turn your output message into a BPRMB request! 
