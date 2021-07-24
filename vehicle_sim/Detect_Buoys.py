@@ -66,9 +66,9 @@ def find_angles(centers, res):
     return angles
 
 def detect_buoys(img):
-    img = cv2.boxFilter(img, -1, (5, 5))
+    img = cv2.boxFilter(img, -1, (10, 10))
     # Find thresholds for Green Buoy
-    filter_size = (10, 10) # P: may need to change when we get closer to buoy
+    filter_size = (5, 5) # P: may need to change when we get closer to buoy
     rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
     img_threshold_green = np.logical_and(rfilt > 0, rfilt < 120)
 
@@ -95,7 +95,7 @@ def detect_buoys(img):
 doPlots = False # Plots from lab15
 if doPlots:
     fig, ax = plt.subplots()
-    for frame_num in range(1627084245, 1627084283):
+    for frame_num in range(1627084245, 1627160591):
         filename = f'frames/frame_{frame_num}.jpg'
         # img = cv2.imread(f'frames/frame_1627084245.jpg')
         print(filename)
