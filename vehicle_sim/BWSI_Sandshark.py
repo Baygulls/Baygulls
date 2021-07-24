@@ -210,7 +210,7 @@ class Sandshark(object):
         if np.abs(desired) < self.__FULL_RUDDER_DEG:
             self.__rudder_position = desired
         else:
-            print("INVALID RUDDER REQUEST: {desired}")
+            print(f"INVALID RUDDER REQUEST: {desired}")
     
     def helm_command(self, command):
         ### Available commands:
