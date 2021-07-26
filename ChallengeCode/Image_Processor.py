@@ -18,6 +18,7 @@ import numpy as np
 # import picamera.array
 
 import cv2
+import Detect_Buoys 
 
 # For simulations
 from BWSI_BuoyField import BuoyField
@@ -33,7 +34,7 @@ class ImageProcessor():
             self.__simField = None
             
         else:
-            self.__camera = picamera.PiCamera()
+            # self.__camera = picamera.PiCamera()
             self.__camera.resolution = (640, 480)
             self.__camera.framerate = 24
             time.sleep(2) # camera warmup time
@@ -150,7 +151,7 @@ class ImageProcessor():
 
             # synthesize an image
             image = self.__camera.get_frame(auv_state['position'], auv_state['heading'], self.__simField)
-
+            
         elif self.__camera_type == 'PICAM':
             try:
                 self.__camera.capture(self.__image, 'bgr')

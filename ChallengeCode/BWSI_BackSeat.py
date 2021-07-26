@@ -56,7 +56,9 @@ class BackSeat():
             ('altitude', None),
             ('roll', None),
             ('pitch', None),
-            ('last_fix_time', None)
+            ('last_fix_time', None),
+            ('speed', None),
+            ('rudder', 0)
         ])
         
         # we'll use the first navigation update as datum
@@ -111,8 +113,6 @@ class BackSeat():
                     ### Here you process the image and return the angles to target
                     ### green, red = self.__detect_buoys(img)
                     green, red = self.__buoy_detector.run(self.__auv_state)
-                    ### ---------------------------------------------------------- #
-
 
                     ### self.__autonomy.decide() probably goes here!
                     ### ---------------------------------------------------------- #
