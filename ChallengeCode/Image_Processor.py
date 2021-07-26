@@ -14,10 +14,11 @@ import datetime
 
 import time 
 import numpy as np
-import picamera 
-import picamera.array
+# import picamera 
+# import picamera.array
 
 import cv2
+import Detect_Buoys 
 
 # For simulations
 from BWSI_BuoyField import BuoyField
@@ -33,7 +34,7 @@ class ImageProcessor():
             self.__simField = None
             
         else:
-            self.__camera = picamera.PiCamera()
+            # self.__camera = picamera.PiCamera()
             self.__camera.resolution = (640, 480)
             self.__camera.framerate = 24
             time.sleep(2) # camera warmup time
@@ -74,7 +75,7 @@ class ImageProcessor():
                     self.__camera.capture(self.__image, 'bgr')
                 except:
                     # restart the camera
-                    self.__camera = picamera.PiCamera()
+                    # self.__camera = picamera.PiCamera()
                     self.__camera.resolution = (640, 480)
                     self.__camera.framerate = 24
                     time.sleep(2) # camera warmup time
@@ -90,5 +91,5 @@ class ImageProcessor():
             cv2.imwrite(str(fn), image)
         
             # process and find the buoys!
-        
+            g_centers, r_centers, green, red = Detect_Buoys.detect_buoys(image)
         return red, green
