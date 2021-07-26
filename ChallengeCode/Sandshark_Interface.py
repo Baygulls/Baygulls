@@ -7,19 +7,19 @@ Created on Fri Jul 16 23:04:06 2021
 """
 
 import time
-# import sys, os
+#import sys, os
 
 import socket
 import select
-# import threading
+#import threading
 import queue
 
 import traceback
 
-import numpy as np
+#import numpy as np
 
-# from pynmea2 import pynmea2
-# import BluefinMessages
+#from pynmea2 import pynmea2
+#import BluefinMessages
 
 ## The main message handler
 class SandsharkServer():
@@ -66,6 +66,7 @@ class SandsharkServer():
                         outputs.remove(s)
                     readable, writeable, exceptional = select.select(inputs, outputs, inputs)
                     continue
+                        
                 
                 for s in readable:
                     if s is self.__sockt:
@@ -101,7 +102,7 @@ class SandsharkServer():
                     inputs.remove(s)
                     if s in outputs:
                         outputs.remove(s)
-                    s.close()    
+                    s.close()            
 
         except:
             traceback.print_exc()
@@ -183,11 +184,11 @@ class SandsharkClient():
                     self.__sockt.send(next_msg)
                     self.__outgoing.task_done()
     
-                    # time.sleep(0.01)
+                    #time.sleep(0.01)
                     
                     # now check for messages in return
                     data = self.__sockt.recv(self.__PACKET_SIZE)
-                    # msgs = list()
+                    #msgs = list()
                     if data:
                         data = remain + data
                         msgs = data.split(b'\n')

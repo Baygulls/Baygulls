@@ -14,8 +14,8 @@ import datetime
 
 import time 
 import numpy as np
-# import picamera 
-# import picamera.array
+import picamera 
+import picamera.array
 
 import cv2
 
@@ -23,18 +23,17 @@ import cv2
 from BWSI_BuoyField import BuoyField
 from BWSI_Sensor import BWSI_Camera
 
-import Detect_Buoys 
 
 class ImageProcessor():
     def __init__(self, camera='SIM', log_dir='./'):
         self.__camera_type = camera.upper()
-  
+
         if self.__camera_type == 'SIM':
             self.__camera = BWSI_Camera(max_angle=31.1, visibility=50)
             self.__simField = None
-              
+            
         else:
-            # self.__camera = picamera.PiCamera()
+            self.__camera = picamera.PiCamera()
             self.__camera.resolution = (640, 480)
             self.__camera.framerate = 24
             time.sleep(2) # camera warmup time
@@ -60,28 +59,28 @@ class ImageProcessor():
                     self.__simField = BuoyField(auv_state['datum'])
                     config = {'nGates': 5,
                               'gate_spacing': 5,
-                            'gate_width': 2,
+                              'gate_width': 2,
                               'style': 'pool_1',
-                            'max_offset': 5,
+                              'max_offset': 5,
                               'heading': 0}
-                      
+                    
                     self.__simField.configure(config)
-                   
+                 
                 # synthesize an image
                 image = self.__camera.get_frame(auv_state['position'], auv_state['heading'], self.__simField)
-  
+
             elif self.__camera_type == 'PICAM':
                 try:
                     self.__camera.capture(self.__image, 'bgr')
                 except:
                     # restart the camera
-                    # self.__camera = picamera.PiCamera()
+                    self.__camera = picamera.PiCamera()
                     self.__camera.resolution = (640, 480)
                     self.__camera.framerate = 24
                     time.sleep(2) # camera warmup time
                     
                 image = self.__image.reshape((480, 640, 3))
-
+        
             else:
                 print(f"Unknown camera type: {self.__camera_type}")
                 sys.exit(-10)
@@ -91,5 +90,5 @@ class ImageProcessor():
             cv2.imwrite(str(fn), image)
         
             # process and find the buoys!
-            g_centers, r_centers, green, red = Detect_Buoys.detect_buoys(image)
-        return green, red
+        
+        return red, green

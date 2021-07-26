@@ -120,6 +120,7 @@ class FrontSeat():
         vals = payld[0].split(',')
         if vals[0] == '$BPRMB':
             print("Here!")
+                
             # heading / rudder request
             if vals[2] != '':
                 print("Here?")

@@ -108,7 +108,7 @@ class BuoyField(object):
 
         self.add_buoy_gates(green_buoys, red_buoys, position_style)
         self.__miss_start_time = float('inf')
-        
+    
     def configure(self, config):
         nGates = config['nGates']
         gate_spacing = config['gate_spacing']

@@ -9,6 +9,7 @@ import utm
 import random
 import time
 import datetime
+import pytz
 
 
 from pynmea2 import pynmea2
@@ -95,7 +96,7 @@ class Sandshark(object):
         self.__STANDARD_RUDDER_DEG = 10
         self.__MAX_TURNING_RATE = 15.64
         self.__RUDDER_COST = 0.35
-          
+        
         self.__MAX_RPM = 2500
 
     ##############################################################
@@ -346,7 +347,7 @@ class Sandshark(object):
             
             if (cmd[2]=="DEGREES" and cmd[3]=="RUDDER"):
                 if not cmd[1].isdigit():
-                    return "COMMAND"
+                    return "COMMANDa"
                 deg = int(cmd[1])
             else:
                 return "COMMAND"

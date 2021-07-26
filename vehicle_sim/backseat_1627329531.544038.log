@@ -1,0 +1,105 @@
+1627329531.544038, Sending: $BPLOG,ACK,ON*1e
+
+1627329531.544038, Sending: $BPLOG,ALL,ON*16
+
+1627329531.54657, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329532.549951, Sending: $BPRMB,155852.54,,,,1000,0,1*42
+1627329532.550368, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329532.550778, Processing: $BFNVG,155849.54,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155849.54*62
+Interpreted as: {'position': (0, 0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 49), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155849.79,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155849.79*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 49), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155850.04,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155850.04*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 50), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155850.30,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155850.30*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 50), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155850.55,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155850.55*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 50), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155850.80,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155850.80*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 50), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155851.05,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155851.05*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 51), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329532.550778, Processing: $BFNVG,155851.30,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,155851.30*62
+Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 51), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329533.685048, Sending: $BPRMB,155853.68,0,,,1000,0,1*7c
+1627329533.685372, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329534.758295, Sending: $BPRMB,155854.75,0,,,1000,0,1*77
+1627329534.758764, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329534.759225, Processing: $BFNVG,155853.01,4218.000171,N,07105.999781,W,0,10.0,1.0,45.0,0.0,0.0,155853.01*61
+Interpreted as: {'position': (0.30868959764484316, 0.3090440100058913), 'latlon': (42.30000285, -71.09999635), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 53), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329535.830895, Sending: $BPRMB,155855.83,0,,,1000,0,1*7f
+1627329535.831203, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329535.831505, Processing: $BFNVG,155854.18,4218.000643,N,07105.999176,W,0,10.0,1.0,45.0,0.0,0.0,155854.18*69
+Interpreted as: {'position': (1.161443946766667, 1.1620605792850256), 'latlon': (42.30001071666667, -71.09998626666666), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 54), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329536.904115, Sending: $BPRMB,155856.90,0,,,1000,0,1*7e
+1627329536.904593, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329536.90506, Processing: $BFNVG,155855.31,4218.001099,N,07105.998591,W,0,10.0,1.0,45.0,0.0,0.0,155855.31*65
+Interpreted as: {'position': (1.9859897579299286, 1.9861441878601909), 'latlon': (42.300018316666666, -71.09997651666667), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 58, 55), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329537.970467, Sending: $BPRMB,155857.97,0,,,1000,0,1*78
+1627329537.970887, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329539.034546, Sending: $BPRMB,155859.03,0,,,1000,0,1*7b
+1627329539.035284, Sending: $BPSTS,1558%,1,BWSI Autonomy OK*46
+
+1627329540.105643, Sending: $BPRMB,155900.10,0,,,1000,0,1*74
+1627329540.105969, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329541.168214, Sending: $BPRMB,155901.16,0,,,1000,0,1*73
+1627329541.169142, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329542.251869, Sending: $BPRMB,155902.25,0,,,1000,0,1*70
+1627329542.252465, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329543.327827, Sending: $BPRMB,155903.32,0,,,1000,0,1*77
+1627329543.328186, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329544.38688, Sending: $BPRMB,155904.38,0,,,1000,0,1*7a
+1627329544.387205, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329545.563087, Sending: $BPRMB,155905.56,0,,,1000,0,1*73
+1627329545.563616, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329546.624145, Sending: $BPRMB,155906.62,0,,,1000,0,1*77
+1627329546.624559, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329547.683091, Sending: $BPRMB,155907.68,0,,,1000,0,1*7c
+1627329547.683554, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329548.743426, Sending: $BPRMB,155908.74,0,,,1000,0,1*7e
+1627329548.743854, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329549.811321, Sending: $BPRMB,155909.81,0,,,1000,0,1*75
+1627329549.811665, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329550.872237, Sending: $BPRMB,155910.87,0,,,1000,0,1*7b
+1627329550.872512, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329551.937303, Sending: $BPRMB,155911.93,0,,,1000,0,1*7f
+1627329551.937751, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329552.997335, Sending: $BPRMB,155912.99,0,,,1000,0,1*76
+1627329552.997675, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329552.99801, Processing: $BFNVG,155911.29,4218.007531,N,07105.990344,W,0,10.0,1.0,45.0,0.0,0.0,155911.29*62
+Interpreted as: {'position': (13.610114159877412, 13.610225398093462), 'latlon': (42.30012551666667, -71.09983906666666), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 59, 11), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329554.060656, Sending: $BPRMB,155914.06,0,,,1000,0,1*76
+1627329554.060969, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329554.0612772, Processing: $BFNVG,155912.39,4218.007974,N,07105.989776,W,0,10.0,1.0,45.0,0.0,0.0,155912.39*62
+Interpreted as: {'position': (14.410707486793399, 14.41082767304033), 'latlon': (42.3001329, -71.0998296), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 59, 12), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329555.128277, Sending: $BPRMB,155915.12,0,,,1000,0,1*72
+1627329555.128582, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329555.128882, Processing: $BFNVG,155913.45,4218.008401,N,07105.989228,W,0,10.0,1.0,45.0,0.0,0.0,155913.45*6C
+Interpreted as: {'position': (15.183092408115044, 15.182496923953295), 'latlon': (42.30014001666667, -71.09982046666667), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 59, 13), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+1627329556.193075, Sending: $BPRMB,155916.19,0,,,1000,0,1*7a
+1627329556.193382, Sending: $BPSTS,1559%,1,BWSI Autonomy OK*47
+
+1627329556.193685, Processing: $BFNVG,155914.53,4218.008835,N,07105.988672,W,0,10.0,1.0,45.0,0.0,0.0,155914.53*6D
+Interpreted as: {'position': (15.96678785129916, 15.966849921271205), 'latlon': (42.30014725, -71.0998112), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 26, 15, 59, 14), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
