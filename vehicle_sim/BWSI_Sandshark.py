@@ -346,7 +346,7 @@ class Sandshark(object):
             
             if (cmd[2]=="DEGREES" and cmd[3]=="RUDDER"):
                 if not cmd[1].isdigit():
-                    return "COMMANDa"
+                    return "COMMAND"
                 deg = int(cmd[1])
             else:
                 return "COMMAND"
