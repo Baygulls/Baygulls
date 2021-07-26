@@ -147,7 +147,7 @@ class FrontSeat():
 
 def main():
     if len(sys.argv) > 1:
-        port = sys.argv[1]
+        port = int(sys.argv[1])
     else:
         port = 29500
         

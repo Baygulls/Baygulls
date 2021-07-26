@@ -83,13 +83,13 @@ class FrontSeat():
                 self.__current_time = now
                 
                 msgs = self.__server.receive_mail()
+                
                 if len(msgs) > 0:
                     self.__isConnected = True
                     print("\nReceived from backseat:")
                     for msg in msgs:
                         self.parse_payload_command(str(msg, 'utf-8'))
-                        print(f"{str(msg, 'utf-8')}")
-                        
+                        print(f"{str(msg, 'utf-8')}")    
                     
                 if self.__doPlots and self.__isConnected:
                     current_position = self.__vehicle.get_position()
@@ -106,7 +106,7 @@ class FrontSeat():
                     
                     plt.pause(0.01)
                     plt.draw()
- 
+                    
                 count += 1
                 time.sleep(.25/self.__warp)
         except:
@@ -146,7 +146,7 @@ class FrontSeat():
 
 def main():
     if len(sys.argv) > 1:
-        port = sys.argv[1]
+        port = int(sys.argv[1])
     else:
         port = 29500
         
