@@ -23,10 +23,14 @@ import cv2
 from BWSI_BuoyField import BuoyField
 from BWSI_Sensor import BWSI_Camera
 
-import Detect_Buoys 
+from Buoy_Detector import BuoyDetector
 
 class ImageProcessor():
+<<<<<<< Updated upstream
     def __init__(self, camera='SIM', log_dir='./'):
+=======
+    def __init__(self, camera='PICAM', log_dir='./', logger=None):
+>>>>>>> Stashed changes
         self.__camera_type = camera.upper()
   
         if self.__camera_type == 'SIM':
@@ -43,16 +47,19 @@ class ImageProcessor():
         # create my save directory
         self.__image_dir = pathlib.Path(log_dir, 'frames')
         self.__image_dir.mkdir(parents=True, exist_ok=True)
-
+        self.__logger = logger
+        self.__buoy_detector = BuoyDetector(logger=logger)
     
     # ------------------------------------------------------------------------ #
     # Run an iteration of the image processor. 
     # The sim version needs the auv state to generate simulated imagery
     # the PICAM does not need any auv_state input
     # ------------------------------------------------------------------------ #
+    
     def run(self, auv_state=None):
         red = None
         green = None
+        
         if auv_state['heading'] is not None:
             if (self.__camera_type == 'SIM'):
                 # if it's the first time through, configure the buoy field
@@ -87,9 +94,10 @@ class ImageProcessor():
                 sys.exit(-10)
         
             # log the image
-            fn = self.__image_dir / f"frame_{int(datetime.datetime.utcnow().timestamp())}.jpg"
-            cv2.imwrite(str(fn), image)
+#             fn = self.__image_dir / f"frame_{int(datetime.datetime.utcnow().timestamp())}.jpg"
+#             cv2.imwrite(str(fn), image)
         
             # process and find the buoys!
-            g_centers, r_centers, green, red = Detect_Buoys.detect_buoys(image)
+            g_centers, r_centers, green, red = self.__buoy_detector.detect_buoys(image)
+            
         return green, red
