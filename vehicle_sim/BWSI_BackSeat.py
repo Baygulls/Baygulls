@@ -8,6 +8,7 @@ This is the simulated Sandshark front seat
 
 @author: BWSI AUV Challenge Instructional Staff
 """
+import traceback
 import sys
 import time
 import threading
@@ -144,14 +145,14 @@ class BackSeat():
                         self.send_message(msg)
                         engine_started = True
 
-                    if not turned and (self.__current_time - self.__start_time) > 30:
+                    if not turned and (self.__current_time - self.__start_time) > 5:
                         ## We want to set the rudder position, use degrees plus or minus
                         ## This command is how much to /change/ the rudder position, not to 
                         ## set the rudder
                         self.__current_time = datetime.datetime.utcnow().timestamp()
                         hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
 
-                        cmd = f"BPRMB,{hhmmss},-15,,,750,0,1"
+                        cmd = f"BPRMB,{hhmmss},15,,,750,0,1"
                         msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
                         self.send_message(msg)
                         turned = True
@@ -161,8 +162,8 @@ class BackSeat():
                 # ------------------------------------------------------------ #
                 
                 
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
+        except Exception:
+            print(traceback.format_exc())
             self.__client.cleanup()
             client.join()
           

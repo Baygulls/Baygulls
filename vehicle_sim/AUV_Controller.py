@@ -53,6 +53,10 @@ class AUVController():
             cmd = None
         # print("current rudder", self.__rudder)
         # print("shift rudder by this much", cmd)
+        if cmd:
+            print("new_rudder", self.__rudder + cmd)
+        else:
+            print("new_rudder", self.__rudder)
         return cmd
         
     # return the desired heading to a public requestor
@@ -76,7 +80,7 @@ class AUVController():
     def __heading_to_angle(self, gnext, rnext):
         # pass rnext on port side
         # pass gnext on starboard side
-        print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
+        # print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
         # which are measured clockwise from the heading of the AUV.
 
         # rnext and gnext are in this format. We only need the horizontal angle to the buoy,
@@ -111,7 +115,10 @@ class AUVController():
         # how much do we want to turn the rudder
         ## Note: using STANDARD RUDDER only for now! A calculation here
         ## will improve performance!
-        turn_command = "STANDARD RUDDER"
+        if abs(delta_angle) > 10:
+            turn_command = "FULL RUDDER"
+        else:
+            turn_command = "STANDARD RUDDER"
         if delta_angle > 2:  # need to turn to right!
             if self.__rudder >= 0:  # rudder is turning to the left
                 cmd = f"RIGHT {turn_command}"
@@ -121,6 +128,7 @@ class AUVController():
         else:  # close enough!
             cmd = "RUDDER AMIDSHIPS"
             change_rudder_by = (-self.__rudder)
+        print(delta_angle)
         # Convert command to $BPRMB request
         # get direction and rudder position from cmd
         if cmd is None:
