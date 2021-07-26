@@ -45,7 +45,7 @@ class AUVController():
             self.__desired_heading = self.__heading_to_position(green_buoys, red_buoys)
         elif sensor_type.upper() == 'ANGLE': # camera sensor
             self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
-    
+
         if self.__desired_heading is not None:
             # determine whether and what command to issue to desired heading               
             cmd = self.__select_command()
@@ -77,7 +77,7 @@ class AUVController():
                                                gate_center[1]-self.__position[1]))+360,360)
         
         return tgt_hdg
-    
+
     def __heading_to_angle(self, gnext, rnext):
         # pass rnext on port side
         # pass gnext on starboard side
