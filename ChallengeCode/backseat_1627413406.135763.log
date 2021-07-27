@@ -1,0 +1,17 @@
+2021-07-27 11:16:46,135 [INFO] host = localhost, port = 29500
+2021-07-27 11:16:50,142 [INFO] sending message $BPLOG,ACK,ON*1e
+...
+2021-07-27 11:16:50,142 [INFO] sending message $BPLOG,ALL,ON*16
+...
+2021-07-27 11:16:50,142 [INFO] sending message $BPSTS,151650.14,1,BWSI Autonomy OK*47
+...
+2021-07-27 11:16:50,142 [INFO] Received from Frontseat: []
+2021-07-27 11:16:50,142 [INFO] AUV state: {'position': (None, None), 'latlon': None, 'heading': None, 'depth': None, 'altitude': None, 'roll': None, 'pitch': None, 'last_fix_time': None, 'speed': None, 'rudder': 0}
+2021-07-27 11:16:50,142 [INFO] Next green buoy: None, next red buoy: None
+2021-07-27 11:16:50,142 [ERROR] An error occurred. The stack trace is below.
+Traceback (most recent call last):
+  File "BWSI_BackSeat.py", line 117, in run
+    rudder_angle, speed = self.__autonomy.decide(self.__auv_state, green, red)
+  File "/home/steven/Baygulls/ChallengeCode/AUV_Controller.py", line 48, in decide
+    self.__desired_heading = self.__heading_to_angle(green_buoys[0], red_buoys[0])
+TypeError: 'NoneType' object is not subscriptable

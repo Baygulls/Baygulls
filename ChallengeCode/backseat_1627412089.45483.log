@@ -1,0 +1,25 @@
+2021-07-27 10:54:49,454 [INFO] host = localhost, port = 29500
+2021-07-27 10:54:53,460 [INFO] sending message $BPLOG,ALL,ON*16
+...
+2021-07-27 10:54:53,461 [INFO] sending message $BPSTS,145453.46,1,BWSI Autonomy OK*44
+...
+2021-07-27 10:54:53,461 [INFO] Received from Frontseat: []
+2021-07-27 10:54:53,461 [INFO] AUV state: {'position': (None, None), 'latlon': None, 'heading': None, 'depth': None, 'altitude': None, 'roll': None, 'pitch': None, 'last_fix_time': None, 'speed': None, 'rudder': 0}
+2021-07-27 10:54:54,462 [INFO] sending message $BPRMB,145454.46,,,,1000,0,1*4a...
+2021-07-27 10:54:54,462 [INFO] sending message $BPSTS,145454.46,1,BWSI Autonomy OK*43
+...
+2021-07-27 10:54:54,467 [INFO] Processing: $BFNVG,145452.96,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,145452.96*62
+2021-07-27 10:54:54,467 [INFO] Interpreted as: {'position': (0, 0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 27, 14, 54, 52), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-27 10:54:54,467 [INFO] Received from Frontseat: [b'$BFNVG,145452.96,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,145452.96*62']
+2021-07-27 10:54:54,467 [INFO] AUV state: {'position': (0, 0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 27, 14, 54, 52), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-27 10:54:54,520 [ERROR] An error occurred. The stack trace is below.
+Traceback (most recent call last):
+  File "BWSI_BackSeat.py", line 114, in run
+    green, red = self.__buoy_detector.run(self.__auv_state)
+  File "/home/steven/Baygulls/ChallengeCode/Image_Processor.py", line 171, in run
+    g_centers, r_centers, green, red = ImageProcessor.detect_buoys(image)
+  File "/home/steven/Baygulls/ChallengeCode/Image_Processor.py", line 119, in detect_buoys
+    g_angles = ImageProcessor.find_angles(g_centers[:, 0], (res[1], res[0])) # pass in resolution of image to calculate angles
+  File "/home/steven/Baygulls/ChallengeCode/Image_Processor.py", line 94, in find_angles
+    angle_for_center = ImageProcessor.get_angles(Image_Processor.sensor_position(center[0], center[1], res[0], res[1]))
+NameError: name 'Image_Processor' is not defined
