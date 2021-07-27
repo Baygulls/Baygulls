@@ -43,7 +43,7 @@ class AUVController():
         
         # determine whether and what command to issue to desired heading               
         rudder_angle = self.__select_angle()
-        speed = 750
+        speed = 1000
         
         return rudder_angle, speed
         
@@ -108,10 +108,10 @@ class AUVController():
         if delta_angle < -180: # angle too small, go the other way!
             delta_angle = delta_angle + 360
             
-        if delta_angle > 35:
-            delta_angle = 35
+        if delta_angle > 25:
+            delta_angle = 25
             
-        elif delta_angle < -35:
-            delta_angle = -35
+        elif delta_angle < -25:
+            delta_angle = -25
             
         return delta_angle
