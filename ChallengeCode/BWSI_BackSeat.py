@@ -74,13 +74,10 @@ class BackSeat():
             # connect the client
             client = threading.Thread(target=self.__client.run, args=())
             client.start()
-            print("GRw")
-#             msg = BluefinMessages.BPLOG('ACK', 'ON')
-#             self.send_message(msg)
-            print("EGWB")
+            msg = BluefinMessages.BPLOG('ACK', 'ON')
+            self.send_message(msg)
             msg = BluefinMessages.BPLOG('ALL', 'ON')
             self.send_message(msg)
-            print("GWEGWRHRE")
             ### These flags are for the test code. Remove them after the initial test!
             engine_started = False
             turned = False
@@ -103,52 +100,30 @@ class BackSeat():
                         
                 self.__logger.info(f"Received from Frontseat: {msgs}")
                 self.__logger.info(f"AUV state: {self.__auv_state}")
-                print(msgs)
                 
-                ### ---------------------------------------------------------- #
-                ### Here should be the request for a photo from the camera
-                ### img = self.__camera.acquire_image()
-                ###
-                ### Here you process the image and return the angles to target
-                ### green, red = self.__detect_buoys(img)
-                green, red = self.__buoy_detector.run(self.__auv_state)
-                ### ---------------------------------------------------------- #
-                
-                
-                ### self.__autonomy.decide() probably goes here!
-                change_rudder_by = self.__autonomy.decide(self.__auv_state, green, red)
-                ### ---------------------------------------------------------- #
-                print("change_r", change_rudder_by)
-                ### turn your output message into a BPRMB request! 
+                if self.__auv_state["heading"] is not None or self.__camera_type != "SIM":
+                    ### ---------------------------------------------------------- #
+                    ### Here should be the request for a photo from the camera
+                    ### img = self.__camera.acquire_image()
+                    ###
+                    ### Here you process the image and return the angles to target
+                    ### green, red = self.__detect_buoys(img)
+                    green, red = self.__buoy_detector.run(self.__auv_state)
+                    self.__logger.info(f"Next green buoy: {green}, next red buoy: {red}")
+                    ### ---------------------------------------------------------- #
 
+
+                    ### self.__autonomy.decide() probably goes here!
+                    rudder_angle, speed = self.__autonomy.decide(self.__auv_state, green, red)
+
+                    ### ---------------------------------------------------------- #
+                    ### turn your output message into a BPRMB request! 
+
+                    cmd = self.format_command(rudder_angle, speed)
+                    msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
+                    self.send_message(msg)
+                
                 time.sleep(1/self.__warp)
-
-                if True:
-                    if not engine_started and (self.__current_time - self.__start_time) > 3:
-                        ## We want to change the speed. For now we will always use the RPM (1500 Max)
-                        self.__current_time = datetime.datetime.utcnow().timestamp()
-                        # This is the timestamp format from NMEA: hhmmss.ss
-                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-                        cmd = f"BPRMB,{hhmmss},0,,,1000,0,1"
-                        # NMEA requires a checksum on all the characters between the $ and the *
-                        # you can use the BluefinMessages.checksum() function to calculate
-                        # and write it like below. The checksum goes after the *
-                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
-                        self.send_message(msg)
-                        engine_started = True
-                    else:
-                        self.__current_time = datetime.datetime.utcnow().timestamp()
-                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-                        if change_rudder_by is None:
-                            cmd = f"BPRMB,{hhmmss},,,,1000,0,1"
-                        else:
-                            cmd = f"BPRMB,{hhmmss},{change_rudder_by},,,1000,0,1"
-                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
-                        self.send_message(msg)
-                        turned = True
-                        if change_rudder_by is not None:
-                            self.__auv_state['rudder'] += change_rudder_by 
-                            # ^update self.__rudder after we send the msg
                 
                 # ------------------------------------------------------------ #
                 # ----This is example code to show commands being issued
@@ -191,43 +166,10 @@ class BackSeat():
             client.join()
           
     
-    def format_command(self, cmd):
-        new_rudder = None
-        
-        if len(cmd.split(" ")) == 3:
-            direction, position = cmd.split(" ")[:2]
-            
-            if position == "STANDARD":
-                position = 15
-                
-            elif position == "FULL":
-                position = 30
-                
-            elif position == "HARD":
-                position = 35
-
-            if direction == "RIGHT":
-                new_rudder = (-position)  # for some reason turning right has a negative angle on Sandshark
-            else:
-                new_rudder = position
-                
-        elif len(cmd.split(" ")) == 4:
-            direction, position = cmd.split(" ")[:2]
-            position = int(float(position))
-            
-            if direction == "RIGHT":
-                new_rudder = (-position)  # for some reason turning right has a negative angle on Sandshark
-            else:
-                new_rudder = position
-                
-        if new_rudder is None:
-            cmd = None
-            return cmd
-        
-        else:
-            hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-            cmd = f"BPRMB,{hhmmss},{-new_rudder},,,750,0,1"
-            return cmd
+    def format_command(self, rudder_angle, speed=750):
+        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+        cmd = f"BPRMB,{hhmmss},{-rudder_angle},,,{speed},0,1"
+        return cmd
     
     def process_message(self, message):
         # DEAL WITH INCOMING BFNVG MESSAGES AND USE THEM TO UPDATE THE
