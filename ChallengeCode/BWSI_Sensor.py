@@ -18,10 +18,18 @@ class BWSI_Camera(object):
         self.__MAX_ANGLE = max_angle # field of view of camera (+/- MAX_ANGLE degrees)
         self.__SENSOR_TYPE = 'ANGLE'
         
-        # Parameters relevant for simulating camera images # Camera is sideways
+        # Parameters relevant for simulating camera images
+        # Original parameters
+        self.__Wpix = 640
+        self.__Hpix = 480
+        self.__max_angle_W = 31.1
+        self.__max_angle_H = 24.4
+
+        # Swap dimensions to get more accurate angles
+        # The img returned will still have 640 W and 480 H
         self.__Wpix = 480
         self.__Hpix = 640
-        self.__max_angle_W = 24.4
+        self.__max_angle_W = 24.4 # SWITCHING THE ANGLES CAUSES AN ERROR.
         self.__max_angle_H = 31.1
     
         # calculate the horizontal and vertical angles to the pixels
