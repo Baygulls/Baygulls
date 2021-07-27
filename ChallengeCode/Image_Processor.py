@@ -112,7 +112,7 @@ class ImageProcessor():
         # Get centers of the buoys using the thresholds
         g_centers = ImageProcessor.get_centers(thresh, img_threshold_green, img)
         r_centers = ImageProcessor.get_centers(thresh, img_threshold_red, img)
-        res = img.shape # in the buoy_simulation photos, it was (640, 480, 3). 640 is y axis, 480 is x axis
+        res = img.shape # in the buoy_simulation photos, it was (480, 640, 3). 640 is x axis, 480 is y axis
 
         # Get angles (horizontal and vertical) from the camera sensor to the buoys
         g_angles = []
