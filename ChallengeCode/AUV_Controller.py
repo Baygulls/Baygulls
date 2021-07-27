@@ -26,7 +26,7 @@ class AUVController():
     def initialize(self, auv_state):
         self.__heading = auv_state['heading']
 #         self.__speed = auv_state['speed']
-#         self.__rudder = auv_state['rudder']
+        self.__rudder = auv_state['rudder']
         self.__position = auv_state['position']
         
         # assume we want to be going the direction we're going for now
@@ -37,7 +37,7 @@ class AUVController():
         # update state information
         self.__heading = auv_state['heading']
 #         self.__speed = auv_state['speed']
-#         self.__rudder = auv_state['rudder']
+        self.__rudder = auv_state['rudder']
         self.__position = auv_state['position']
                 
         # determine what heading we want to go
@@ -45,12 +45,16 @@ class AUVController():
             self.__desired_heading = self.__heading_to_position(green_buoys, red_buoys)
             
         elif sensor_type.upper() == 'ANGLE': # camera sensor
-            self.__desired_heading = self.__heading_to_angle(green_buoys[0], red_buoys[0])
+            self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
         
-        # determine whether and what command to issue to desired heading               
-        cmd = self.__select_command()
+         # determine whether and what command to issue to desired heading  
+        if self.__desired_heading is not None:
+            # determine whether and what command to issue to desired heading               
+            cmd = self.__select_command()
+        else:
+            cmd = None
         
-        return cmd, auv_state
+        return cmd
         
         
     # return the desired heading to a public requestor
@@ -74,7 +78,7 @@ class AUVController():
     def __heading_to_angle(self, gnext, rnext):
         # pass rnext on port side
         # pass gnext on starboard side
-        # print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
+        print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
         # which are measured clockwise from the heading of the AUV.
 
         # rnext and gnext are in this format. We only need the horizontal angle to the buoy,
@@ -102,32 +106,101 @@ class AUVController():
         cmd = None
         # determine the angle between current and desired heading
         delta_angle = self.__desired_heading - self.__heading
-        delta_angle %= 360
-        
         if delta_angle > 180: # angle too big, go the other way!
             delta_angle = delta_angle - 360
-            
         if delta_angle < -180: # angle too big, go the other way!
             delta_angle = delta_angle + 360
-            
-        if np.abs(delta_angle) > 35:
-            delta_angle = 35
-            
+        
         # how much do we want to turn the rudder
         ## Note: using STANDARD RUDDER only for now! A calculation here
         ## will improve performance!
-        turn_command = f"{delta_angle} DEGREES RUDDER"
-        
-        # which way do we have to turn
-        if delta_angle > 0: # need to turn to right!
-#             if self.__rudder >= 0: # rudder is turning the other way!
-            cmd = f"RIGHT {turn_command}"
-                
-        elif delta_angle < 0: # need to turn to left!
-#             if self.__rudder <= 0: # rudder is turning the other way!
-            cmd = f"LEFT {turn_command}"
-                
-        else: #close enough!
+        if abs(delta_angle) > 5:
+            turn_command = "FULL RUDDER"
+        else:
+            turn_command = "STANDARD RUDDER"
+        if delta_angle > 2:  # need to turn to right!
+            if self.__rudder >= 0:  # rudder is turning to the left
+                cmd = f"RIGHT {turn_command}"
+        elif delta_angle < -2:  # need to turn to left!
+            if self.__rudder <= 0:  # rudder is turning right!
+                cmd = f"LEFT {turn_command}"
+        else:  # close enough!
             cmd = "RUDDER AMIDSHIPS"
+            change_rudder_by = (-self.__rudder)
+        print(delta_angle)
+        # Convert command to $BPRMB request
+        # get direction and rudder position from cmd
+        if cmd is None:
+            change_rudder_by = 0
+
+        if cmd and (len(cmd.split(" ")) == 3):
+                direction, position = cmd.split(" ")[:2]
+                if position == "STANDARD":
+                    position = 10
+                if position == "FULL":
+                    position = 15 # 25 is full rudder on sandshark
+
+                if direction == "RIGHT":
+                    new_rudder = (-position)  # for some reason turning right requires a negative angle 
+                    # on Sandshark
+                else:
+                    new_rudder = position
+                # print("new_rudder", new_rudder)
+                # print("self.__rudder", self.__rudder)
+                change_rudder_by = new_rudder - self.__rudder
+    
+        return change_rudder_by
+
+    # P: This sends invalid rudder requests
+    # def __select_command(self):
+    #     cmd = None
+    #     # determine the angle between current and desired heading
+    #     delta_angle = self.__desired_heading - self.__heading
+    #     delta_angle %= 360
+        
+    #     if delta_angle > 180: # angle too big, go the other way!
+    #         delta_angle = delta_angle - 360
             
-        return cmd
+    #     if delta_angle < -180: # angle too big, go the other way!
+    #         delta_angle = delta_angle + 360
+            
+    #     if np.abs(delta_angle) > 25:
+    #         delta_angle = 25 # 25 is HARD RUDDER
+            
+    #     # how much do we want to turn the rudder
+    #     ## Note: using STANDARD RUDDER only for now! A calculation here
+    #     ## will improve performance!
+    #     turn_command = f"{abs(delta_angle)} DEGREES RUDDER"
+        
+    #     # which way do we have to turn
+    #     if delta_angle > 0: # need to turn to right!
+    #         cmd = f"RIGHT {turn_command}"
+                
+    #     elif delta_angle < 0: # need to turn to left!
+    #         cmd = f"LEFT {turn_command}"
+                
+    #     else: #close enough!
+    #         cmd = "RUDDER AMIDSHIPS"
+    #         change_rudder_by = -self.__rudder # This will set the rudder to 0
+
+    #     if (len(cmd.split(" ")) == 4):
+    #             direction, position = cmd.split(" ")[:2]
+    #             if position == "STANDARD":
+    #                 position = 10
+    #             if position == "FULL":
+    #                 position = 15 # 25 is full rudder on sandshark
+    #             if position == "HARD":
+    #                 position = 25 # 25 is full rudder on sandshark
+    #             elif position.replace('.','',1).isdigit(): # if position is a number
+    #                 position = int(position.replace('.','',1)) # need to replace periods with 
+    #                 # "" bc "." is not number
+    #             if direction == "RIGHT":
+    #                 new_rudder = (-position)  # for some reason turning right requires a negative angle 
+    #                 # on Sandshark
+    #             else:
+    #                 new_rudder = position
+    #             # print("new_rudder", new_rudder)
+    #             # print("self.__rudder", self.__rudder)
+    #             change_rudder_by = new_rudder - self.__rudder
+    
+    #     return change_rudder_by

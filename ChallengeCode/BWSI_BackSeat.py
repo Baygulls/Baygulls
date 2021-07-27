@@ -31,8 +31,8 @@ def valid_checksum(msg):
     expected = str(hex(BluefinMessages.checksum(cmd))[2:])
     
     if expected.upper() != fields[1].upper():
-        self.logger.warning(f"cmd = {cmd}")
-        self.logger.warning(f"{expected} != {fields[1]}")
+        print(f"cmd = {cmd}")
+        print(f"{expected} != {fields[1]}")
         return False
     
     return True
@@ -105,25 +105,50 @@ class BackSeat():
                 self.__logger.info(f"AUV state: {self.__auv_state}")
                 print(msgs)
                 
-                if self.__auv_state["heading"] is not None or self.__camera_type != "SIM":
-                    ### ---------------------------------------------------------- #
-                    ### Here should be the request for a photo from the camera
-                    ### img = self.__camera.acquire_image()
-                    ###
-                    ### Here you process the image and return the angles to target
-                    ### green, red = self.__detect_buoys(img)
-                    green, red = self.__buoy_detector.run(self.__auv_state)
-
-                    ### self.__autonomy.decide() probably goes here!
-                    ### ---------------------------------------------------------- #
-                    cmd, self.__auv_state = self.__autonomy.decide(self.__auv_state, green, red)
-                    cmd = self.format_command(cmd)
-
-                    ### turn your output message into a BPRMB request!
-                    msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
-                    self.send_message(msg)
+                ### ---------------------------------------------------------- #
+                ### Here should be the request for a photo from the camera
+                ### img = self.__camera.acquire_image()
+                ###
+                ### Here you process the image and return the angles to target
+                ### green, red = self.__detect_buoys(img)
+                green, red = self.__buoy_detector.run(self.__auv_state)
+                ### ---------------------------------------------------------- #
                 
+                
+                ### self.__autonomy.decide() probably goes here!
+                change_rudder_by = self.__autonomy.decide(self.__auv_state, green, red)
+                ### ---------------------------------------------------------- #
+                print("change_r", change_rudder_by)
+                ### turn your output message into a BPRMB request! 
+
                 time.sleep(1/self.__warp)
+
+                if True:
+                    if not engine_started and (self.__current_time - self.__start_time) > 3:
+                        ## We want to change the speed. For now we will always use the RPM (1500 Max)
+                        self.__current_time = datetime.datetime.utcnow().timestamp()
+                        # This is the timestamp format from NMEA: hhmmss.ss
+                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+                        cmd = f"BPRMB,{hhmmss},0,,,1000,0,1"
+                        # NMEA requires a checksum on all the characters between the $ and the *
+                        # you can use the BluefinMessages.checksum() function to calculate
+                        # and write it like below. The checksum goes after the *
+                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
+                        self.send_message(msg)
+                        engine_started = True
+                    else:
+                        self.__current_time = datetime.datetime.utcnow().timestamp()
+                        hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+                        if change_rudder_by is None:
+                            cmd = f"BPRMB,{hhmmss},,,,1000,0,1"
+                        else:
+                            cmd = f"BPRMB,{hhmmss},{change_rudder_by},,,1000,0,1"
+                        msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}"
+                        self.send_message(msg)
+                        turned = True
+                        if change_rudder_by is not None:
+                            self.__auv_state['rudder'] += change_rudder_by 
+                            # ^update self.__rudder after we send the msg
                 
                 # ------------------------------------------------------------ #
                 # ----This is example code to show commands being issued
