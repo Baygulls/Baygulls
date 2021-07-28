@@ -19,11 +19,8 @@ class BWSI_Camera(object):
         self.__SENSOR_TYPE = 'ANGLE'
         
         # Parameters relevant for simulating camera images
-        # Original parameters
         self.__Wpix = 640
         self.__Hpix = 480
-
-        # Swap dimensions to get more accurate angles
         self.__max_angle_W = 31.1
         self.__max_angle_H = 24.4
     
