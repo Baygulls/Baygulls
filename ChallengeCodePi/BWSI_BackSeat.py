@@ -82,7 +82,7 @@ class BackSeat():
             engine_started = False
             turned = False
             
-            while True:
+            while self.__current_time - self.__start_time < 60:
                 now = datetime.datetime.utcnow().timestamp()
                 delta_time = (now-self.__current_time) * self.__warp
 
@@ -168,7 +168,7 @@ class BackSeat():
     
     def format_command(self, rudder_angle, speed=750):
         hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-        cmd = f"BPRMB,{hhmmss},{-rudder_angle},,,{speed},0,1"
+        cmd = f"BPRMB,{hhmmss},{-rudder_angle},1,0,{speed},0,1"
         return cmd
     
     def process_message(self, message):

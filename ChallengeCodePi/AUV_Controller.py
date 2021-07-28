@@ -28,12 +28,12 @@ class AUVController():
         # assume we want to be going the direction we're going for now
         self.__desired_heading = auv_state['heading']
 
-    ### Public member functions    
+    ### Public member functions
     def decide(self, auv_state, green_buoys, red_buoys, sensor_type='ANGLE'):
         # update state information
         self.__heading = auv_state['heading']
         self.__position = auv_state['position']
-                
+        
         # determine what heading we want to go
         if sensor_type.upper() == 'POSITION': # known positions of buoys
             self.__desired_heading = self.__heading_to_position(green_buoys, red_buoys)
@@ -41,17 +41,16 @@ class AUVController():
         elif sensor_type.upper() == 'ANGLE': # camera sensor
             self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
             self.__logger.info(f"Desired_heading: {self.__desired_heading}")
-        # determine whether and what command to issue to desired heading               
+            
+        # determine whether and what command to issue to desired heading
         rudder_angle = self.__select_angle()
         speed = 1000
-        
         return rudder_angle, speed
-        
         
     # return the desired heading to a public requestor
     def get_desired_heading(self):
         return self.__desired_heading
-    
+        
     ### Private member functions
         
     # calculate the heading we want to go to reach the gate center
@@ -80,7 +79,7 @@ class AUVController():
         # if angle in gnext is larger than 220 and len(gnext) > 1, get normal angle
         if gnext and rnext:
             relative_angle = (gnext[0][0] + rnext[0][0]) / 2.0
-            # heading to center of the next buoy pair   
+            # heading to center of the next buoy pair
             tgt_hdg = self.__heading + relative_angle
             
         elif gnext:
@@ -99,7 +98,8 @@ class AUVController():
     def __select_angle(self):
         # determine the angle between current and desired heading
         delta_angle = self.__desired_heading - self.__heading
-        delta_angle = delta_angle ** 1.25 / 1.5
+        # delta_angle = delta_angle ** 1.25 / 1.5
+        delta_angle *= 2
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!
@@ -113,5 +113,5 @@ class AUVController():
             
         elif delta_angle < -25:
             delta_angle = -25
-            
+        self.__logger.info(f"delta angle: {delta_angle}")
         return delta_angle
