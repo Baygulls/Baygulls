@@ -254,8 +254,7 @@ class BackSeat():
                 else:
                     outstr = f"Request {msg_type} is pending"
                     
-                with open(self.__log_file, 'a') as f:
-                    f.write(f"{outstr}")
+                self.__logger.info(f"{outstr}")
                     
             else:
                 self.__logger.warning(f"I do not know how to process this message type: {fields[0]}")
