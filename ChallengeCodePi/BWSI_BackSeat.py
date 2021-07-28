@@ -254,7 +254,7 @@ class BackSeat():
                 else:
                     outstr = f"Request {msg_type} is pending"
                     
-                with open(self.__log_file, 'a') as f:
+                with open(self.__logger, 'a') as f:
                     f.write(f"{outstr}")
                     
             else:
