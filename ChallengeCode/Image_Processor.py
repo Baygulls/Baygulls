@@ -30,7 +30,7 @@ class ImageProcessor():
         self.__camera_type = camera.upper()
         
         if self.__camera_type == 'SIM':
-            self.__camera = BWSI_Camera(max_angle=31.1, visibility=50)
+            self.__camera = BWSI_Camera(max_angle=24.4, visibility=50)
             self.__simField = None
         else:
             # self.__camera = picamera.PiCamera()
@@ -77,13 +77,15 @@ class ImageProcessor():
             center = np.mean(contour, axis=0)[0]
              # ^ Need to index 0 because np.mean(contour, axis=0)...
             # returns np.array([[mean]]) not np.array([mean])
-            contour_x = np.max(contour, axis=0)[0][0]
-            contour_y = np.max(contour, axis=0)[0][1]
-            contour_size = contour_x * contour_y
+            contour_x_max = np.max(contour, axis=0)[0][0]
+            contour_x_min = np.min(contour, axis=0)[0][0]
+            contour_y_max = np.max(contour, axis=0)[0][1]
+            contour_y_min = np.min(contour, axis=0)[0][1]
+            contour_size = (contour_x_max - contour_x_min) * (contour_y_max - contour_y_min)
             buoys.append((center, contour_size))
         
         buoys = np.array(sorted(buoys, key=lambda x: x[1], reverse=True), dtype=object) # sort buoys by their size in descending order
-        
+    
         return buoys
 
     def find_angles(centers, res):

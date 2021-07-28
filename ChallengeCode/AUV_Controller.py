@@ -40,7 +40,7 @@ class AUVController():
             
         elif sensor_type.upper() == 'ANGLE': # camera sensor
             self.__desired_heading = self.__heading_to_angle(green_buoys, red_buoys)
-        
+            self.__logger.info(f"Desired_heading: {self.__desired_heading}")
         # determine whether and what command to issue to desired heading               
         rudder_angle = self.__select_angle()
         speed = 1000
@@ -99,7 +99,7 @@ class AUVController():
     def __select_angle(self):
         # determine the angle between current and desired heading
         delta_angle = self.__desired_heading - self.__heading
-        delta_angle *= 1.5
+        delta_angle *= 2
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!
