@@ -20,11 +20,10 @@ class BWSI_Camera(object):
         
         # Parameters relevant for simulating camera images
         # Original parameters
-        self.__Wpix = 640
-        self.__Hpix = 480
+        self.__Wpix = 480
+        self.__Hpix = 640
 
         # Swap dimensions to get more accurate angles
-        # The img returned will still have 640 W and 480 H
         self.__max_angle_W = 24.4
         self.__max_angle_H = 31.1
     
