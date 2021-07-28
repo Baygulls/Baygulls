@@ -82,7 +82,7 @@ class BackSeat():
             engine_started = False
             turned = False
             
-            while self.__current_time - self.__start_time < 60:
+            while self.__current_time - self.__start_time < 30:
                 now = datetime.datetime.utcnow().timestamp()
                 delta_time = (now-self.__current_time) * self.__warp
 
@@ -245,6 +245,7 @@ class BackSeat():
                 print(f"time = {fields[1]}")
                 msg_type = fields[2]
                 status = int(fields[5])
+                
                 if status < 2:
                     outstr = f"Vehicle failed to process request {msg_type}: {fields[7]}"
                     
@@ -254,8 +255,7 @@ class BackSeat():
                 else:
                     outstr = f"Request {msg_type} is pending"
                     
-                with open(self.__logger, 'a') as f:
-                    f.write(f"{outstr}")
+                self.__logger.info(f"{outstr}")
                     
             else:
                 self.__logger.warning(f"I do not know how to process this message type: {fields[0]}")
