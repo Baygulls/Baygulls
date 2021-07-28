@@ -25,7 +25,7 @@ class BWSI_Camera(object):
 
         # Swap dimensions to get more accurate angles
         # The img returned will still have 640 W and 480 H
-        self.__max_angle_W = 24.4 # SWITCHING THE ANGLES CAUSES AN ERROR.
+        self.__max_angle_W = 24.4
         self.__max_angle_H = 31.1
     
         # calculate the horizontal and vertical angles to the pixels
