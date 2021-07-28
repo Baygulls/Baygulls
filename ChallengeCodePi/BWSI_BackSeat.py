@@ -82,7 +82,7 @@ class BackSeat():
             engine_started = False
             turned = False
             
-            while True:
+            while self.__current_time - self.__start_time < 60:
                 now = datetime.datetime.utcnow().timestamp()
                 delta_time = (now-self.__current_time) * self.__warp
 
