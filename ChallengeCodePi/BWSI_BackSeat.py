@@ -101,7 +101,7 @@ class BackSeat():
                 self.__logger.info(f"Received from Frontseat: {msgs}")
                 self.__logger.info(f"AUV state: {self.__auv_state}")
                 
-                if self.__auv_state["heading"] is not None or self.__camera_type != "SIM":
+                if self.__auv_state["heading"] is not None:
                     ### ---------------------------------------------------------- #
                     ### Here should be the request for a photo from the camera
                     ### img = self.__camera.acquire_image()
@@ -112,7 +112,7 @@ class BackSeat():
                     self.__logger.info(f"Next green buoy: {green}, next red buoy: {red}")
                     ### ---------------------------------------------------------- #
 
-
+                    
                     ### self.__autonomy.decide() probably goes here!
                     rudder_angle, speed = self.__autonomy.decide(self.__auv_state, green, red)
 
