@@ -34,7 +34,7 @@ class ImageProcessor():
             self.__simField = None
         else:
             self.__camera = picamera.PiCamera()
-            self.__camera.resolution = (480, 640) 
+            self.__camera.resolution = (640, 480) 
             self.__camera.framerate = 24
             time.sleep(2) # camera warmup time
             self.__image = np.empty((480*640*3,), dtype=np.uint8)
@@ -114,7 +114,7 @@ class ImageProcessor():
         # Get centers of the buoys using the thresholds
         g_centers = ImageProcessor.get_centers(thresh, img_threshold_green, img)
         r_centers = ImageProcessor.get_centers(thresh, img_threshold_red, img)
-        res = img.shape # in the buoy_simulation photos, it was (480, 640, 3). 640 is x axis, 480 is y axis
+        res = img.shape # in the buoy_simulation photos, it was (640, 480, 3). 480 is x axis, 640 is y axis
 
         # Get angles (horizontal and vertical) from the camera sensor to the buoys
         g_angles = []
@@ -164,14 +164,14 @@ class ImageProcessor():
             except:
                 # restart the camera
                 self.__camera = picamera.PiCamera()
-                self.__camera.resolution = (480, 640)
+                self.__camera.resolution = (640, 480)
                 self.__camera.framerate = 24
                 time.sleep(2) # camera warmup time
             
             # Reshape the image. this is the image that the camerea took
-            image = self.__image.reshape((640, 480, 3)) # y pixels, x pixels, bgr
+            image = self.__image.reshape((480, 640, 3)) # y pixels, x pixels, bgr
             # Rotate the image right side up
-            image = np.rot90(image, 1) # Dimensions are: 640 x pixels, 480 y pixels
+            image = np.rot90(image, 1) # Dimensions are: 480 x pixels, 640 y pixels
         else:
             self.__logger.warning(f"Unknown camera type: {self.__camera_type}")
             sys.exit(-10)
