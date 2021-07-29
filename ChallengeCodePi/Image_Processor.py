@@ -17,7 +17,7 @@ import numpy as np
 
 import os
 
-if os.uname().nodename == 'auvpi':
+if "pi" in os.uname().nodename:
     import picamera
     import picamera.array
 
@@ -78,6 +78,7 @@ class ImageProcessor():
 
         if cv2.__version__ == '3.2.0':
             _, contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            
         else:
             contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             
@@ -92,6 +93,7 @@ class ImageProcessor():
             contour_y_max = np.max(contour, axis=0)[0][1]
             contour_y_min = np.min(contour, axis=0)[0][1]
             contour_size = (contour_x_max - contour_x_min) * (contour_y_max - contour_y_min)
+            
             if contour_size < 1000:
                 buoys.append((center, contour_size))
         
@@ -187,6 +189,7 @@ class ImageProcessor():
             image = self.__image.reshape((480, 640, 3)) # y pixels, x pixels, bgr
             # Rotate the image right side up
             image = np.rot90(image, 2) # Dimensions are: 640 x pixels, 480 y pixels
+            
         else:
             self.__logger.warning(f"Unknown camera type: {self.__camera_type}")
             sys.exit(-10)
