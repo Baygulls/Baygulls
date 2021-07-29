@@ -14,7 +14,7 @@ import threading
 import time
 import datetime
 import logging
-
+import os
 import utm
 
 from Image_Processor import ImageProcessor
@@ -39,7 +39,7 @@ def valid_checksum(msg):
     
 class BackSeat():
     # we assign the mission parameters on init
-    def __init__(self, host='localhost', port=8000, warp=1, camera_type="PICAM", time_limit=30, logger=None):
+    def __init__(self, host='localhost', port=8000, warp=1, camera_type='PICAM', time_limit=30, logger=None):
         
         # back seat acts as client
         self.__client = SandsharkClient(host=host, port=port)
@@ -338,7 +338,10 @@ def main():
         camera_type = sys.argv[4]
         
     else:
-        camera_type = "PICAM"
+        if os.uname().nodename == 'auvpi':
+            camera_type = "PICAM"
+        else:
+            camera_type = "SIM"
         
     file_handler = logging.FileHandler(f"backseat_{datetime.datetime.utcnow().timestamp()}.log")
     file_handler.setLevel(logging.DEBUG)

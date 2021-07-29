@@ -9,7 +9,7 @@ This is the simulated Sandshark front seat
 @author: BWSI AUV Challenge Instructional Staff
 """
 import sys
-
+import os 
 from BWSI_Sandshark import Sandshark
 from BWSI_BuoyField import BuoyField
 from Sandshark_Interface import SandsharkServer
@@ -43,8 +43,10 @@ class FrontSeat():
         self.__warp = warp
         
         self.__position_history = list()
-        self.__doPlots = False
-        
+        if os.uname().nodename == 'auvpi':
+            self.__doPlots = False
+        else:
+             self.__doPlots = True
         # has heard from the backseat
         self.__isConnected = False
     
