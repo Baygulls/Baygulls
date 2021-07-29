@@ -343,10 +343,7 @@ def main():
         camera_type = sys.argv[4]
         
     else:
-        if os.uname().nodename == 'auvpi':
-            camera_type = "PICAM"
-        else:
-            camera_type = "SIM"
+        camera_type = "PICAM"
         
     file_handler = logging.FileHandler(f"backseat_{datetime.datetime.utcnow().timestamp()}.log")
     file_handler.setLevel(logging.DEBUG)
