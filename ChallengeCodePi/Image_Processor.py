@@ -90,7 +90,8 @@ class ImageProcessor():
             contour_y_max = np.max(contour, axis=0)[0][1]
             contour_y_min = np.min(contour, axis=0)[0][1]
             contour_size = (contour_x_max - contour_x_min) * (contour_y_max - contour_y_min)
-            buoys.append((center, contour_size))
+            if contour_size < 1000:
+                buoys.append((center, contour_size))
         
         buoys = np.array(sorted(buoys, key=lambda x: x[1], reverse=True), dtype=object) # sort buoys by their size in descending order
     
@@ -113,7 +114,7 @@ class ImageProcessor():
         # Find thresholds for red buoy
         rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
         if os.uname().nodename == 'auvpi':
-            img_threshold_green = np.logical_and(gfilt > 180, gfilt < 255) # PICAM
+            img_threshold_green = np.logical_and(gfilt > 175, gfilt < 255) # PICAM
             img_threshold_red = np.logical_and(rfilt > 60, rfilt < 255) # PICAM
         else:
             img_threshold_green = np.logical_and(gfilt > 150, gfilt < 255) # SIM
