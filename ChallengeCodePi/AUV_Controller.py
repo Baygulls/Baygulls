@@ -46,7 +46,7 @@ class AUVController():
         # determine whether and what command to issue to desired heading
         rudder_angle = self.__select_angle()
         self.__rudder = rudder_angle
-        speed = 1000
+        speed = 800
         return rudder_angle, speed
         
     # return the desired heading to a public requestor
