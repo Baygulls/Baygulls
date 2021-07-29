@@ -175,7 +175,7 @@ class BackSeat():
             
     def format_command(self, rudder_angle, speed=750):
         hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-        cmd = f"BPRMB,{hhmmss},{-rudder_angle},1,0,{speed},0,1"
+        cmd = f"BPRMB,{hhmmss},{round(-rudder_angle, 1)},1,0,{speed},0,1"
         return cmd
         
     def process_message(self, message):
@@ -268,7 +268,7 @@ class BackSeat():
                 self.__logger.warning(f"I do not know how to process this message type: {fields[0]}")
                 
     def send_message(self, msg):
-        self.__logger.info(f"sending message {msg}...")
+        self.__logger.info(f"Sending message {msg}...")
         self.__client.send_message(msg)
         
     def send_status(self):
