@@ -110,11 +110,12 @@ class ImageProcessor():
         # Find thresholds for Green Buoy
         filter_size = (5, 5) # P: may need to change when we get closer to buoy
         gfilt = cv2.boxFilter(img[:, :, 1], cv2.CV_32F, filter_size)
-        img_threshold_green = np.logical_and(gfilt > 150, gfilt < 255)
-
+        # img_threshold_green = np.logical_and(gfilt > 150, gfilt < 255) # SIM
+        img_threshold_green = np.logical_and(gfilt > 180, gfilt < 255) # PICAM
         # Find thresholds for red buoy
         rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
-        img_threshold_red = np.logical_and(rfilt > 40, rfilt < 255)
+        # img_threshold_red = np.logical_and(rfilt > 40, rfilt < 255) # SIM
+        img_threshold_red = np.logical_and(rfilt > 60, rfilt < 255) # PICAM
         thresh = 0 # img_threshold_red values are either 0 or 1... 
         # but if we used cv2.boxFilter with normalize = False, the pixel values would have values...
         # in range of 0 to the size of the filter
