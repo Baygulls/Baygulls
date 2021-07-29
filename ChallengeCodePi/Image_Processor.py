@@ -36,6 +36,7 @@ class ImageProcessor():
         if self.__camera_type == 'SIM':
             self.__camera = BWSI_Camera(max_angle=24.4, visibility=50)
             self.__simField = None
+            
         else:
             self.__camera = picamera.PiCamera()
             self.__camera.resolution = (640, 480) 

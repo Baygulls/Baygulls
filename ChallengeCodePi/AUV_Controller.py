@@ -111,7 +111,7 @@ class AUVController():
             
         # delta_angle = delta_angle ** 1.25 / 1.5
         # delta_angle *= 2
-        delta_angle = np.abs(delta_angle) ** 1.3 / 1.4 * sign
+        delta_angle = np.abs(delta_angle) ** 1.25 / 1.5 * sign
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!
