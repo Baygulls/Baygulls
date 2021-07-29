@@ -66,19 +66,19 @@ class AUVController():
                                                gate_center[1]-self.__position[1]))+360,360)
         
         return tgt_hdg
-
+        
     def __heading_to_angle(self, gnext, rnext):
         # pass rnext on port side
         # pass gnext on starboard side
         # print("rnext:", rnext, " gnext: ", gnext) # relative angles to the buoys
         # which are measured clockwise from the heading of the AUV.
-
+        
         # rnext and gnext are in this format. We only need the horizontal angle to the buoy,
         # which is why we get the horizontal angle by doing gnext[0][0]
         
         # rnext: [(-2.6533087248159455, -5.348725386576375)]
         # gnext:  [(8.445588240799415, -5.304815966173086)]
-
+        
         # if angle in gnext is larger than 220 and len(gnext) > 1, get normal angle
         if gnext and rnext:
             relative_angle = (gnext[0][0] + rnext[0][0]) / 2.0
@@ -91,29 +91,28 @@ class AUVController():
         elif rnext:
             tgt_hdg = self.__heading + rnext[0][0]
             
-        elif self.__rudder is not None: # see no buoys
-            tgt_hdg = self.__heading + self.__rudder / 5
+        # elif self.__rudder is not None: # see no buoys
+        #     tgt_hdg = self.__heading + min(5, np.abs(self.__rudder)) * self.__rudder / np.abs(self.__rudder)
             
         else:
             tgt_hdg = self.__heading
             
         return tgt_hdg
-
-
+        
     # choose a command to send to the front seat
     def __select_angle(self):
         # determine the angle between current and desired heading
         delta_angle = self.__desired_heading - self.__heading
-        # delta_angle = delta_angle ** 1.25 / 1.5
-        # delta_angle *= 2
         
         if delta_angle != 0:
             sign = delta_angle / np.abs(delta_angle)
-        
+            
         else:
             sign = 1
-        
-        delta_angle = np.abs(delta_angle) ** 2 / 1.25 * sign
+            
+        # delta_angle = delta_angle ** 1.25 / 1.5
+        delta_angle *= 2
+        # delta_angle = np.abs(delta_angle) ** 1.25 / 1.5 * sign
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!
