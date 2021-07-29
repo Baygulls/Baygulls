@@ -90,8 +90,13 @@ class AUVController():
         elif rnext:
             tgt_hdg = self.__heading + rnext[0][0]
             
-        # elif self.__rudder is not None: # see no buoys
-        #     tgt_hdg = self.__heading + min(20, max(15, np.abs(self.__rudder))) * self.__rudder / np.abs(self.__rudder)
+        elif self.__rudder is not None: # see no buoys
+            sign = 1
+            
+            if self.__rudder != 0:
+		sign = self.__rudder / np.abs(self.__rudder)
+                
+            tgt_hdg = self.__heading + min(20, max(15, np.abs(self.__rudder))) * sign
             
         else:
             tgt_hdg = self.__heading
@@ -110,8 +115,8 @@ class AUVController():
             sign = 1
             
         # delta_angle = delta_angle ** 1.25 / 1.5
-        delta_angle *= 2
-        # delta_angle = np.abs(delta_angle) ** 1.25 / 1.5 * sign
+        # delta_angle *= 2
+        delta_angle = np.abs(delta_angle) ** 1.25 / 1.5 * sign
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!

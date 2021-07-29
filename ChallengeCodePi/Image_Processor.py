@@ -177,7 +177,7 @@ class ImageProcessor():
         elif self.__camera_type == 'PICAM':
             try:
                 self.__camera.capture(self.__image, 'bgr')
-
+                
             except:
                 # restart the camera
                 self.__camera = picamera.PiCamera()
