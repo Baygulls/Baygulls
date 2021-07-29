@@ -1,0 +1,165 @@
+2021-07-29 14:28:12,990 [INFO] host = 192.168.1.213, port = 29500
+2021-07-29 14:28:18,131 [INFO] sending message $BPLOG,ACK,ON*1e
+...
+2021-07-29 14:28:18,133 [INFO] sending message $BPLOG,ALL,ON*16
+...
+2021-07-29 14:28:18,134 [INFO] sending message $BPSTS,132818.13,1,BWSI Autonomy OK*47
+...
+2021-07-29 14:28:18,135 [INFO] Received from Frontseat: []
+2021-07-29 14:28:18,136 [INFO] AUV state: {'position': (None, None), 'latlon': None, 'heading': None, 'depth': None, 'altitude': None, 'roll': None, 'pitch': None, 'last_fix_time': None, 'speed': None, 'rudder': 0}
+2021-07-29 14:28:18,638 [INFO] sending message $BPSTS,132818.63,1,BWSI Autonomy OK*40
+...
+2021-07-29 14:28:18,639 [INFO] Processing: $BFNVG,132817.98,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132817.98*62
+2021-07-29 14:28:18,641 [INFO] Interpreted as: {'position': (0, 0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 17), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:18,642 [INFO] Processing: $BFNVG,132818.23,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.23*62
+2021-07-29 14:28:18,644 [INFO] Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 18), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:18,645 [INFO] Received from Frontseat: [b'$BFNVG,132817.98,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132817.98*62', b'$BFNVG,132818.23,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.23*62']
+2021-07-29 14:28:18,646 [INFO] AUV state: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 18), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:19,037 [INFO] Next green buoy (centers, angles): (array([[array([317.97058824, 168.64705882]), 112]], dtype=object), [(-0.21993023293121178, -7.6862156757158235)]), next red buoy (centers, angles): (array([[array([466., 172.]), 180]], dtype=object), [(15.437560812208067, -7.329055330858309)])
+2021-07-29 14:28:19,037 [INFO] Desired_heading: 52.60881528963843
+2021-07-29 14:28:19,038 [INFO] delta angle: 15.217630579276857
+2021-07-29 14:28:19,038 [INFO] sending message $BPRMB,132819.59,-15.217630579276857,1,0,1000,0,1*74
+...
+2021-07-29 14:28:19,539 [INFO] sending message $BPSTS,132819.53,1,BWSI Autonomy OK*42
+...
+2021-07-29 14:28:19,540 [INFO] Processing: $BFNVG,132818.63,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.63*62
+2021-07-29 14:28:19,541 [INFO] Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 18), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:19,542 [INFO] Processing: $BFNVG,132818.97,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.97*62
+2021-07-29 14:28:19,543 [INFO] Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 18), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:19,544 [INFO] Processing: $BFNVG,132819.31,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132819.31*62
+2021-07-29 14:28:19,545 [INFO] Interpreted as: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 19), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:19,545 [INFO] Received from Frontseat: [b'$BFNVG,132818.63,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.63*62', b'$BFNVG,132818.97,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132818.97*62', b'$BFNVG,132819.31,4218.000000,N,07106.000000,W,0,10.0,1.0,45.0,0.0,0.0,132819.31*62']
+2021-07-29 14:28:19,546 [INFO] AUV state: {'position': (0.0, 0.0), 'latlon': (42.3, -71.1), 'heading': 45.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 19), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:19,909 [INFO] Next green buoy (centers, angles): (array([[array([317.96666667, 168.43333333]), 84]], dtype=object), [(-0.22035521470194389, -7.708961974233651)]), next red buoy (centers, angles): (array([[array([466.        , 171.95454545]), 180]], dtype=object), [(15.437560812208067, -7.333901112744751)])
+2021-07-29 14:28:19,909 [INFO] Desired_heading: 52.60860279875306
+2021-07-29 14:28:19,910 [INFO] delta angle: 15.217205597506123
+2021-07-29 14:28:19,910 [INFO] sending message $BPRMB,132819.43,-15.217205597506123,1,0,1000,0,1*77
+...
+2021-07-29 14:28:20,411 [INFO] sending message $BPSTS,132820.41,1,BWSI Autonomy OK*4b
+...
+2021-07-29 14:28:20,412 [INFO] Processing: $BFNVG,132819.66,4218.000138,N,07105.999819,W,0,10.0,1.0,46.3,0.0,0.0,132819.66*62
+2021-07-29 14:28:20,413 [INFO] Interpreted as: {'position': (0.25497499061748385, 0.24925939459353685), 'latlon': (42.3000023, -71.09999698333333), 'heading': 46.3, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 19), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:20,414 [INFO] Processing: $BFNVG,132820.00,4218.000271,N,07105.999636,W,0,10.0,1.0,47.6,0.0,0.0,132820.00*6B
+2021-07-29 14:28:20,415 [INFO] Interpreted as: {'position': (0.5124693607212976, 0.4891975000500679), 'latlon': (42.30000451666667, -71.09999393333334), 'heading': 47.6, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 20), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:20,416 [INFO] Received from Frontseat: [b'$BFNVG,132819.66,4218.000138,N,07105.999819,W,0,10.0,1.0,46.3,0.0,0.0,132819.66*62', b'$BFNVG,132820.00,4218.000271,N,07105.999636,W,0,10.0,1.0,47.6,0.0,0.0,132820.00*6B']
+2021-07-29 14:28:20,417 [INFO] AUV state: {'position': (0.5124693607212976, 0.4891975000500679), 'latlon': (42.30000451666667, -71.09999393333334), 'heading': 47.6, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 20), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:20,765 [INFO] Next green buoy (centers, angles): (array([[array([289.75757576, 161.15151515]), 120]], dtype=object), [(-3.2738628775819443, -8.48244385104216)]), next red buoy (centers, angles): (array([[array([452.04, 164.44]), 231]], dtype=object), [(14.022583907909596, -8.133506146902702)])
+2021-07-29 14:28:20,766 [INFO] Desired_heading: 52.97436051516382
+2021-07-29 14:28:20,766 [INFO] delta angle: 10.748721030327644
+2021-07-29 14:28:20,767 [INFO] sending message $BPRMB,132822.36,-10.748721030327644,1,0,1000,0,1*7f
+...
+2021-07-29 14:28:21,268 [INFO] sending message $BPSTS,132821.26,1,BWSI Autonomy OK*4b
+...
+2021-07-29 14:28:21,269 [INFO] Processing: $BFNVG,132820.34,4218.000401,N,07105.999449,W,0,10.0,1.0,48.9,0.0,0.0,132820.34*60
+2021-07-29 14:28:21,270 [INFO] Interpreted as: {'position': (0.7753222163883038, 0.7234479058533907), 'latlon': (42.300006683333336, -71.09999081666666), 'heading': 48.9, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 20), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:21,271 [INFO] Processing: $BFNVG,132820.69,4218.000529,N,07105.999256,W,0,10.0,1.0,50.2,0.0,0.0,132820.69*61
+2021-07-29 14:28:21,272 [INFO] Interpreted as: {'position': (1.0463269907049835, 0.9537934958934784), 'latlon': (42.30000881666667, -71.0999876), 'heading': 50.2, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 20), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:21,273 [INFO] Received from Frontseat: [b'$BFNVG,132820.34,4218.000401,N,07105.999449,W,0,10.0,1.0,48.9,0.0,0.0,132820.34*60', b'$BFNVG,132820.69,4218.000529,N,07105.999256,W,0,10.0,1.0,50.2,0.0,0.0,132820.69*61']
+2021-07-29 14:28:21,273 [INFO] AUV state: {'position': (1.0463269907049835, 0.9537934958934784), 'latlon': (42.30000881666667, -71.0999876), 'heading': 50.2, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 20), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:21,645 [INFO] Next green buoy (centers, angles): (array([[array([258.65853659, 153.90243902]), 144]], dtype=object), [(-6.6181031900475125, -9.249367239336399)]), next red buoy (centers, angles): (array([[array([437.2       , 156.36363636]), 264]], dtype=object), [(12.499069901375002, -8.989342979005237)])
+2021-07-29 14:28:21,646 [INFO] Desired_heading: 53.14048335566375
+2021-07-29 14:28:21,646 [INFO] delta angle: 5.880966711327488
+2021-07-29 14:28:21,647 [INFO] sending message $BPRMB,132819.08,-5.880966711327488,1,0,1000,0,1*4e
+...
+2021-07-29 14:28:22,148 [INFO] sending message $BPSTS,132822.14,1,BWSI Autonomy OK*49
+...
+2021-07-29 14:28:22,149 [INFO] Processing: $BFNVG,132821.03,4218.000653,N,07105.999062,W,0,10.0,1.0,51.5,0.0,0.0,132821.03*6C
+2021-07-29 14:28:22,150 [INFO] Interpreted as: {'position': (1.3185229398077354, 1.1767024025321007), 'latlon': (42.300010883333336, -71.09998436666666), 'heading': 51.5, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 21), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:22,151 [INFO] Processing: $BFNVG,132821.37,4218.000773,N,07105.998864,W,0,10.0,1.0,52.5,0.0,0.0,132821.37*63
+2021-07-29 14:28:22,152 [INFO] Interpreted as: {'position': (1.5960317009594291, 1.3920729123055935), 'latlon': (42.30001288333333, -71.09998106666667), 'heading': 52.5, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 21), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:22,153 [INFO] Received from Frontseat: [b'$BFNVG,132821.03,4218.000653,N,07105.999062,W,0,10.0,1.0,51.5,0.0,0.0,132821.03*6C', b'$BFNVG,132821.37,4218.000773,N,07105.998864,W,0,10.0,1.0,52.5,0.0,0.0,132821.37*63']
+2021-07-29 14:28:22,153 [INFO] AUV state: {'position': (1.5960317009594291, 1.3920729123055935), 'latlon': (42.30001288333333, -71.09998106666667), 'heading': 52.5, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 21), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:22,498 [INFO] Next green buoy (centers, angles): (array([[array([225.68888889, 143.        ]), 180]], dtype=object), [(-10.114292234794817, -10.396455304424233)]), next red buoy (centers, angles): (array([[array([425.70769231, 147.90769231]), 324]], dtype=object), [(11.306656464272626, -9.881083849676752)])
+2021-07-29 14:28:22,498 [INFO] Desired_heading: 53.0961821147389
+2021-07-29 14:28:22,499 [INFO] delta angle: 1.1923642294778034
+2021-07-29 14:28:22,499 [INFO] sending message $BPRMB,132828.27,-1.1923642294778034,1,0,1000,0,1*70
+...
+2021-07-29 14:28:23,000 [INFO] sending message $BPSTS,132823.00,1,BWSI Autonomy OK*4d
+...
+2021-07-29 14:28:23,001 [INFO] Processing: $BFNVG,132821.72,4218.000892,N,07105.998662,W,0,10.0,1.0,53.4,0.0,0.0,132821.72*6B
+2021-07-29 14:28:23,002 [INFO] Interpreted as: {'position': (1.8789902954595163, 1.605457117781043), 'latlon': (42.300014866666665, -71.0999777), 'heading': 53.4, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 21), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,003 [INFO] Processing: $BFNVG,132822.06,4218.001009,N,07105.998460,W,0,10.0,1.0,53.9,0.0,0.0,132822.06*6D
+2021-07-29 14:28:23,004 [INFO] Interpreted as: {'position': (2.161857525468804, 1.8151399390771985), 'latlon': (42.30001681666667, -71.09997433333334), 'heading': 53.9, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 22), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,005 [INFO] Processing: $BFNVG,132822.41,4218.001126,N,07105.998252,W,0,10.0,1.0,54.4,0.0,0.0,132822.41*6C
+2021-07-29 14:28:23,006 [INFO] Interpreted as: {'position': (2.452968018944375, 2.0246193446218967), 'latlon': (42.30001876666667, -71.09997086666667), 'heading': 54.4, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 22), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,007 [INFO] Received from Frontseat: [b'$BFNVG,132821.72,4218.000892,N,07105.998662,W,0,10.0,1.0,53.4,0.0,0.0,132821.72*6B', b'$BFNVG,132822.06,4218.001009,N,07105.998460,W,0,10.0,1.0,53.9,0.0,0.0,132822.06*6D', b'$BFNVG,132822.41,4218.001126,N,07105.998252,W,0,10.0,1.0,54.4,0.0,0.0,132822.41*6C']
+2021-07-29 14:28:23,007 [INFO] AUV state: {'position': (2.452968018944375, 2.0246193446218967), 'latlon': (42.30001876666667, -71.09997086666667), 'heading': 54.4, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 22), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,396 [INFO] Next green buoy (centers, angles): (array([[array([182.20338983, 121.84745763]), 312]], dtype=object), [(-14.608291913603178, -12.597426074927384)]), next red buoy (centers, angles): (array([[array([425.18181818, 127.36363636]), 442]], dtype=object), [(11.251846664738595, -12.026814361397234)])
+2021-07-29 14:28:23,396 [INFO] Desired_heading: 52.721777375567704
+2021-07-29 14:28:23,397 [INFO] delta angle: -3.3564452488645884
+2021-07-29 14:28:23,397 [INFO] sending message $BPRMB,132812.44,3.3564452488645884,1,0,1000,0,1*5a
+...
+2021-07-29 14:28:23,898 [INFO] sending message $BPSTS,132823.89,1,BWSI Autonomy OK*4c
+...
+2021-07-29 14:28:23,899 [INFO] Processing: $BFNVG,132822.75,4218.001239,N,07105.998048,W,0,10.0,1.0,54.9,0.0,0.0,132822.75*65
+2021-07-29 14:28:23,900 [INFO] Interpreted as: {'position': (2.7384002878097817, 2.226831590756774), 'latlon': (42.30002065, -71.09996746666667), 'heading': 54.9, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 22), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,901 [INFO] Processing: $BFNVG,132823.09,4218.001352,N,07105.997843,W,0,10.0,1.0,55.0,0.0,0.0,132823.09*6D
+2021-07-29 14:28:23,902 [INFO] Interpreted as: {'position': (3.025206421385519, 2.4290099442005157), 'latlon': (42.30002253333333, -71.09996405), 'heading': 55.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 23), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:23,903 [INFO] Received from Frontseat: [b'$BFNVG,132822.75,4218.001239,N,07105.998048,W,0,10.0,1.0,54.9,0.0,0.0,132822.75*65', b'$BFNVG,132823.09,4218.001352,N,07105.997843,W,0,10.0,1.0,55.0,0.0,0.0,132823.09*6D']
+2021-07-29 14:28:23,903 [INFO] AUV state: {'position': (3.025206421385519, 2.4290099442005157), 'latlon': (42.30002253333333, -71.09996405), 'heading': 55.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 23), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:24,293 [INFO] Next green buoy (centers, angles): (array([[array([152.27536232, 101.26086957]), 434]], dtype=object), [(-17.60123057440948, -14.703895730936697)]), next red buoy (centers, angles): (array([[array([434.69230769, 109.36263736]), 585],
+       [array([206.15789474, 198.63157895]), 42]], dtype=object), [(12.239777494668774, -13.879412880269541), (-12.151751323501344, -4.474060612876027)])
+2021-07-29 14:28:24,293 [INFO] Desired_heading: 52.319273460129644
+2021-07-29 14:28:24,294 [INFO] delta angle: -5.361453079740727
+2021-07-29 14:28:24,294 [INFO] sending message $BPRMB,132846.80,5.361453079740727,1,0,1000,0,1*6c
+...
+2021-07-29 14:28:24,795 [INFO] sending message $BPSTS,132824.79,1,BWSI Autonomy OK*44
+...
+2021-07-29 14:28:24,796 [INFO] Processing: $BFNVG,132823.43,4218.001464,N,07105.997638,W,0,10.0,1.0,55.1,0.0,0.0,132823.43*6C
+2021-07-29 14:28:24,797 [INFO] Interpreted as: {'position': (3.3119668670697138, 2.6293376106768847), 'latlon': (42.3000244, -71.09996063333334), 'heading': 55.1, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 23), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:24,798 [INFO] Processing: $BFNVG,132823.77,4218.001576,N,07105.997431,W,0,10.0,1.0,55.2,0.0,0.0,132823.77*66
+2021-07-29 14:28:24,799 [INFO] Interpreted as: {'position': (3.6014750546892174, 2.829597480595112), 'latlon': (42.30002626666667, -71.09995718333333), 'heading': 55.2, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 23), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:24,800 [INFO] Processing: $BFNVG,132824.11,4218.001689,N,07105.997225,W,0,10.0,1.0,54.9,0.0,0.0,132824.11*6C
+2021-07-29 14:28:24,801 [INFO] Interpreted as: {'position': (3.8896550175268203, 3.03174196369946), 'latlon': (42.30002815, -71.09995375), 'heading': 54.9, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 24), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:24,801 [INFO] Received from Frontseat: [b'$BFNVG,132823.43,4218.001464,N,07105.997638,W,0,10.0,1.0,55.1,0.0,0.0,132823.43*6C', b'$BFNVG,132823.77,4218.001576,N,07105.997431,W,0,10.0,1.0,55.2,0.0,0.0,132823.77*66', b'$BFNVG,132824.11,4218.001689,N,07105.997225,W,0,10.0,1.0,54.9,0.0,0.0,132824.11*6C']
+2021-07-29 14:28:24,802 [INFO] AUV state: {'position': (3.8896550175268203, 3.03174196369946), 'latlon': (42.30002815, -71.09995375), 'heading': 54.9, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 24), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:25,197 [INFO] Next green buoy (centers, angles): (array([[array([96.47777778, 53.93333333]), 615]], dtype=object), [(-22.917694505684693, -19.388770444436062)]), next red buoy (centers, angles): (array([[array([470.96428571,  67.3125    ]), 833],
+       [array([197.45, 194.4 ]), 49]], dtype=object), [(15.936216314307424, -18.0885557322108), (-13.050506805032056, -4.929561366174123)])
+2021-07-29 14:28:25,197 [INFO] Desired_heading: 51.40926090431137
+2021-07-29 14:28:25,198 [INFO] delta angle: -6.981478191377278
+2021-07-29 14:28:25,198 [INFO] sending message $BPRMB,132740.77,6.981478191377278,1,0,1000,0,1*6b
+...
+2021-07-29 14:28:25,699 [INFO] sending message $BPSTS,132825.69,1,BWSI Autonomy OK*44
+...
+2021-07-29 14:28:25,700 [INFO] Processing: $BFNVG,132824.46,4218.001803,N,07105.997019,W,0,10.0,1.0,54.6,0.0,0.0,132824.46*62
+2021-07-29 14:28:25,701 [INFO] Interpreted as: {'position': (4.177880632458255, 3.2357371542602777), 'latlon': (42.30003005, -71.09995031666666), 'heading': 54.6, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 24), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:25,702 [INFO] Processing: $BFNVG,132824.80,4218.001917,N,07105.996814,W,0,10.0,1.0,54.2,0.0,0.0,132824.80*66
+2021-07-29 14:28:25,703 [INFO] Interpreted as: {'position': (4.464732353575528, 3.4397662598639727), 'latlon': (42.30003195, -71.0999469), 'heading': 54.2, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 24), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:25,704 [INFO] Processing: $BFNVG,132825.14,4218.002033,N,07105.996611,W,0,10.0,1.0,53.7,0.0,0.0,132825.14*63
+2021-07-29 14:28:25,705 [INFO] Interpreted as: {'position': (4.748927641427144, 3.6475645815953612), 'latlon': (42.300033883333334, -71.09994351666667), 'heading': 53.7, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 25), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:25,705 [INFO] Received from Frontseat: [b'$BFNVG,132824.46,4218.001803,N,07105.997019,W,0,10.0,1.0,54.6,0.0,0.0,132824.46*62', b'$BFNVG,132824.80,4218.001917,N,07105.996814,W,0,10.0,1.0,54.2,0.0,0.0,132824.80*66', b'$BFNVG,132825.14,4218.002033,N,07105.996611,W,0,10.0,1.0,53.7,0.0,0.0,132825.14*63']
+2021-07-29 14:28:25,706 [INFO] AUV state: {'position': (4.748927641427144, 3.6475645815953612), 'latlon': (42.300033883333334, -71.09994351666667), 'heading': 53.7, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 25), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:26,052 [INFO] Next green buoy (centers, angles): (array([], dtype=object), []), next red buoy (centers, angles): (array([[array([552.99253731,   4.93283582]), 682],
+       [array([199.45833333, 190.45833333]), 63]], dtype=object), [(23.782757555407958, -23.97075244319278), (-12.843785802099173, -5.353295030740454)])
+2021-07-29 14:28:26,052 [INFO] Desired_heading: 77.48275755540796
+2021-07-29 14:28:26,052 [INFO] delta angle: 25
+2021-07-29 14:28:26,053 [INFO] sending message $BPRMB,132955.55,-25,1,0,1000,0,1*6f
+...
+2021-07-29 14:28:26,554 [INFO] sending message $BPSTS,132826.55,1,BWSI Autonomy OK*48
+...
+2021-07-29 14:28:26,555 [INFO] Processing: $BFNVG,132825.49,4218.002151,N,07105.996408,W,0,10.0,1.0,53.3,0.0,0.0,132825.49*68
+2021-07-29 14:28:26,556 [INFO] Interpreted as: {'position': (5.033214254013728, 3.859064307063818), 'latlon': (42.30003585, -71.09994013333333), 'heading': 53.3, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 25), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:26,557 [INFO] Processing: $BFNVG,132825.83,4218.002270,N,07105.996205,W,0,10.0,1.0,52.6,0.0,0.0,132825.83*67
+2021-07-29 14:28:26,558 [INFO] Interpreted as: {'position': (5.317546520091128, 4.072414740920067), 'latlon': (42.300037833333334, -71.09993675), 'heading': 52.6, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 25), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:26,558 [INFO] Received from Frontseat: [b'$BFNVG,132825.49,4218.002151,N,07105.996408,W,0,10.0,1.0,53.3,0.0,0.0,132825.49*68', b'$BFNVG,132825.83,4218.002270,N,07105.996205,W,0,10.0,1.0,52.6,0.0,0.0,132825.83*67']
+2021-07-29 14:28:26,559 [INFO] AUV state: {'position': (5.317546520091128, 4.072414740920067), 'latlon': (42.300037833333334, -71.09993675), 'heading': 52.6, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 25), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:26,931 [INFO] Next green buoy (centers, angles): (array([], dtype=object), []), next red buoy (centers, angles): (array([[array([202.57142857, 187.53571429]), 77]], dtype=object), [(-12.5226782327799, -5.667103775209092)])
+2021-07-29 14:28:26,932 [INFO] Desired_heading: 40.0773217672201
+2021-07-29 14:28:26,932 [INFO] delta angle: -25
+2021-07-29 14:28:26,932 [INFO] sending message $BPRMB,132528.56,25,1,0,1000,0,1*47
+...
+2021-07-29 14:28:27,433 [INFO] sending message $BPSTS,132827.43,1,BWSI Autonomy OK*4e
+...
+2021-07-29 14:28:27,434 [INFO] Processing: $BFNVG,132826.18,4218.002391,N,07105.996004,W,0,10.0,1.0,52.0,0.0,0.0,132826.18*6C
+2021-07-29 14:28:27,435 [INFO] Interpreted as: {'position': (5.599222352262586, 4.289534389041364), 'latlon': (42.30003985, -71.0999334), 'heading': 52.0, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 26), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:27,436 [INFO] Processing: $BFNVG,132826.52,4218.002510,N,07105.995802,W,0,10.0,1.0,54.2,0.0,0.0,132826.52*6A
+2021-07-29 14:28:27,437 [INFO] Interpreted as: {'position': (5.882180704618804, 4.502918749116361), 'latlon': (42.30004183333333, -71.09993003333334), 'heading': 54.2, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 26), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:27,438 [INFO] Processing: $BFNVG,132826.86,4218.002622,N,07105.995594,W,0,10.0,1.0,56.3,0.0,0.0,132826.86*69
+2021-07-29 14:28:27,439 [INFO] Interpreted as: {'position': (6.173062617017422, 4.703144816681743), 'latlon': (42.3000437, -71.09992656666667), 'heading': 56.3, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 26), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:27,440 [INFO] Received from Frontseat: [b'$BFNVG,132826.18,4218.002391,N,07105.996004,W,0,10.0,1.0,52.0,0.0,0.0,132826.18*6C', b'$BFNVG,132826.52,4218.002510,N,07105.995802,W,0,10.0,1.0,54.2,0.0,0.0,132826.52*6A', b'$BFNVG,132826.86,4218.002622,N,07105.995594,W,0,10.0,1.0,56.3,0.0,0.0,132826.86*69']
+2021-07-29 14:28:27,440 [INFO] AUV state: {'position': (6.173062617017422, 4.703144816681743), 'latlon': (42.3000437, -71.09992656666667), 'heading': 56.3, 'depth': 1.0, 'altitude': 10.0, 'roll': 0.0, 'pitch': 0.0, 'last_fix_time': datetime.datetime(2021, 7, 29, 13, 28, 26), 'speed': None, 'rudder': 0, 'datum': (42.3, -71.1)}
+2021-07-29 14:28:27,801 [INFO] Next green buoy (centers, angles): (array([], dtype=object), []), next red buoy (centers, angles): (array([[array([150.5, 182. ]), 130]], dtype=object), [(-17.77586748746212, -6.260538177738868)])
+2021-07-29 14:28:27,801 [INFO] Desired_heading: 38.524132512537875
+2021-07-29 14:28:27,802 [INFO] delta angle: -25
+2021-07-29 14:28:27,802 [INFO] sending message $BPRMB,133425.17,25,1,0,1000,0,1*4f
+...
