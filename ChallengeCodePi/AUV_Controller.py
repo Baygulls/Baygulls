@@ -99,7 +99,15 @@ class AUVController():
         # determine the angle between current and desired heading
         delta_angle = self.__desired_heading - self.__heading
         # delta_angle = delta_angle ** 1.25 / 1.5
-        delta_angle *= 2
+        # delta_angle *= 2
+        
+        if delta_angle != 0:
+            sign = delta_angle / np.abs(delta_angle)
+        
+        else:
+            sign = 1
+        
+        delta_angle = np.abs(delta_angle) ** 2 / 1.25 * sign
         delta_angle %= 360
         
         if delta_angle > 180: # angle too big, go the other way!
@@ -113,5 +121,6 @@ class AUVController():
             
         elif delta_angle < -25:
             delta_angle = -25
+            
         self.__logger.info(f"delta angle: {delta_angle}")
         return delta_angle

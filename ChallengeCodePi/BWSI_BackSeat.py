@@ -39,7 +39,7 @@ def valid_checksum(msg):
 
 class BackSeat():
     # we assign the mission parameters on init
-    def __init__(self, host='localhost', port=8000, warp=1, camera_type="PICAM", logger=None):
+    def __init__(self, host='localhost', port=8000, warp=1, camera_type="SIM", logger=None):
         
         # back seat acts as client
         self.__client = SandsharkClient(host=host, port=port)
@@ -82,7 +82,7 @@ class BackSeat():
             engine_started = False
             turned = False
             
-            while self.__current_time - self.__start_time < 30:
+            while self.__current_time - self.__start_time < 100000:
                 now = datetime.datetime.utcnow().timestamp()
                 delta_time = (now-self.__current_time) * self.__warp
 
@@ -122,14 +122,15 @@ class BackSeat():
                     cmd = self.format_command(rudder_angle, speed)
                     msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
                     self.send_message(msg)
-                
+                    
                 time.sleep(1/self.__warp)
                 
                 # ------------------------------------------------------------ #
                 # ----This is example code to show commands being issued
                 # ------------------------------------------------------------ #
                 if False:
-                    print(f"dt = {self.__current_time - self.__start_time}")
+                    self.__logger.info(f"dt = {self.__current_time - self.__start_time}")
+                    
                     if not engine_started and (self.__current_time - self.__start_time) > 3:
                         ## We want to change the speed. For now we will always use the RPM (1500 Max)
                         self.__current_time = datetime.datetime.utcnow().timestamp()
@@ -146,16 +147,16 @@ class BackSeat():
 
                     if not turned and (self.__current_time - self.__start_time) > 30:
                         ## We want to set the rudder position, use degrees plus or minus
-                        ## This command is how much to /change/ the rudder position, not to 
+                        ## This command is how much to /change/ the rudder position, not to
                         ## set the rudder
                         self.__current_time = datetime.datetime.utcnow().timestamp()
                         hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
-
+                        
                         cmd = f"BPRMB,{hhmmss},-15,,,750,0,1"
                         msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
                         self.send_message(msg)
                         turned = True
-                    
+                        
                 # ------------------------------------------------------------ #
                 # ----End of example code
                 # ------------------------------------------------------------ #
@@ -164,8 +165,7 @@ class BackSeat():
             self.__logger.error("An error occurred. The stack trace is below.", exc_info=True)
             self.__client.cleanup()
             client.join()
-          
-    
+            
     def format_command(self, rudder_angle, speed=750):
         hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
         cmd = f"BPRMB,{hhmmss},{-rudder_angle},1,0,{speed},0,1"
@@ -180,7 +180,7 @@ class BackSeat():
         processed_list = list()
         for msgpart in reversed(messages):
             msg = f"${msgpart}"
-        
+            
             # JRE: skipping the checksum check for now!
             self.__logger.info(f"Processing: {msg}")
 
@@ -237,12 +237,12 @@ class BackSeat():
                     
             elif fields[0] == '$BFVER':
                 # don't care about the time for now
-                print(f"Version is {fields[2]}")
+                self.__logger.info(f"Version is {fields[2]}")
                 
                 self.__logger.info(f"Version: {fields[2]}")
                 
             elif fields[0] == '$BFACK':
-                print(f"time = {fields[1]}")
+                self.__logger.info(f"time = {fields[1]}")
                 msg_type = fields[2]
                 status = int(fields[5])
                 
