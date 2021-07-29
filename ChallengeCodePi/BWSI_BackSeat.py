@@ -39,12 +39,13 @@ def valid_checksum(msg):
 
 class BackSeat():
     # we assign the mission parameters on init
-    def __init__(self, host='localhost', port=8000, warp=1, camera_type="SIM", logger=None):
+    def __init__(self, host='localhost', port=8000, warp=1, camera_type="PICAM", time_limit=30, logger=None):
         
         # back seat acts as client
         self.__client = SandsharkClient(host=host, port=port)
         self.__current_time = datetime.datetime.utcnow().timestamp()
         self.__start_time = self.__current_time
+        self.__time_limit = time_limit
         self.__logger = logger
         self.__warp = warp
         
@@ -82,7 +83,7 @@ class BackSeat():
             engine_started = False
             turned = False
             
-            while self.__current_time - self.__start_time < 100000:
+            while self.__current_time - self.__start_time < self.__time_limit:
                 now = datetime.datetime.utcnow().timestamp()
                 delta_time = (now-self.__current_time) * self.__warp
 
@@ -108,7 +109,7 @@ class BackSeat():
                     ###
                     ### Here you process the image and return the angles to target
                     ### green, red = self.__detect_buoys(img)
-                    green, red = self.__buoy_detector.run(self.__auv_state)
+                    g_centers, r_centers, green, red = self.__buoy_detector.run(self.__auv_state)
                     self.__logger.info(f"Next green buoy: {green}, next red buoy: {red}")
                     ### ---------------------------------------------------------- #
 
@@ -311,14 +312,28 @@ class BackSeat():
 def main():
     if len(sys.argv) > 1:
         host = sys.argv[1]
+        
     else:
         host = "localhost"
         
     if len(sys.argv) > 2:
         port = int(sys.argv[2])
+        
     else:
         port = 29500
+
+    if len(sys.argv) > 3:
+        time_limit = int(sys.argv[3])
         
+    else:
+        time_limit = 30
+
+    if len(sys.argv) > 4:
+        camera_type = sys.argv[4]
+        
+    else:
+        camera_type = "PICAM"
+    
     file_handler = logging.FileHandler(f"backseat_{datetime.datetime.utcnow().timestamp()}.log")
     file_handler.setLevel(logging.DEBUG)
     logging.basicConfig(format="%(asctime)s [%(levelname)s] %(message)s", handlers=[logging.StreamHandler(sys.stdout), file_handler])
@@ -326,7 +341,7 @@ def main():
     logger.setLevel(logging.INFO)
     
     logger.info(f"host = {host}, port = {port}")
-    backseat = BackSeat(host=host, port=port, logger=logger)
+    backseat = BackSeat(host=host, port=port, camera_type=camera_type, logger=logger)
     backseat.run()
     
 if __name__ == '__main__':

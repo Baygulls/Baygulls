@@ -18,6 +18,7 @@ class AUVController():
         self.__desired_heading = None
         self.__gnext = None
         self.__rnext = None
+        self.__rudder = None
         
         self.__logger = logger
         
@@ -44,6 +45,8 @@ class AUVController():
             
         # determine whether and what command to issue to desired heading
         rudder_angle = self.__select_angle()
+        self.__rudder = rudder_angle
+
         speed = 1000
         return rudder_angle, speed
         
@@ -88,7 +91,10 @@ class AUVController():
         elif rnext:
             tgt_hdg = self.__heading + rnext[0][0]
             
-        else: # see no buoys
+        elif self.__rudder is not None: # see no buoys
+            tgt_hdg = self.__heading + self.__rudder / 5
+            
+        else:
             tgt_hdg = self.__heading
             
         return tgt_hdg

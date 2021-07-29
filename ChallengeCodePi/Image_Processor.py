@@ -15,8 +15,11 @@ import datetime
 import time 
 import numpy as np
 
-import picamera 
-import picamera.array
+import os
+
+if os.uname().nodename == 'auvpi':
+    import picamera
+    import picamera.array
 
 import cv2
 
@@ -70,7 +73,12 @@ class ImageProcessor():
         thresh8 = (thresh * 255 / np.max(img)).astype(np.uint8)
         thresh, img_out = cv2.threshold(img8, thresh8, 255, cv2.THRESH_BINARY)
         # The image should still have one of two possible values at each pixel.
-        contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+
+        if cv2.__version__ == '3.2.0':
+            _, contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        else:
+            contours, hierarchy = cv2.findContours(img_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            
         buoys = []
         
         for contour in contours:
@@ -126,8 +134,6 @@ class ImageProcessor():
         if len(r_centers) > 0:
             r_angles = ImageProcessor.find_angles(r_centers[:, 0], (res[1], res[0]))
             
-        self.__logger.info(f"**** {g_angles} {r_angles}")
-        
         return g_centers, r_centers, g_angles, r_angles
     
     # ------------------------------------------------------------------------ #
@@ -184,4 +190,4 @@ class ImageProcessor():
             # process and find the buoys!
             g_centers, r_centers, green, red = self.detect_buoys(image)
             
-        return green, red
+        return g_centers, r_centers, green, red
