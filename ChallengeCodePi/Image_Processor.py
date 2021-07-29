@@ -22,6 +22,7 @@ if os.uname().nodename == 'auvpi':
     import picamera.array
 
 import cv2
+import random
 
 # For simulations
 from BWSI_BuoyField import BuoyField
@@ -113,13 +114,15 @@ class ImageProcessor():
         gfilt = cv2.boxFilter(img[:, :, 1], cv2.CV_32F, filter_size)
         # Find thresholds for red buoy
         rfilt = cv2.boxFilter(img[:, :, 2], cv2.CV_32F, filter_size)
-        if os.uname().nodename == 'auvpi':
+        
+        if self.__camera_type == "PICAM":
             img_threshold_green = np.logical_and(gfilt > 175, gfilt < 255) # PICAM
             img_threshold_red = np.logical_and(rfilt > 60, rfilt < 255) # PICAM
+            
         else:
             img_threshold_green = np.logical_and(gfilt > 150, gfilt < 255) # SIM
             img_threshold_red = np.logical_and(rfilt > 40, rfilt < 255) # SIM
-        
+            
         thresh = 0 # img_threshold_red values are either 0 or 1... 
         # but if we used cv2.boxFilter with normalize = False, the pixel values would have values...
         # in range of 0 to the size of the filter
@@ -189,7 +192,7 @@ class ImageProcessor():
             
         if image is not None:
             # log the image
-            fn = self.__image_dir / f"frame_{int(datetime.datetime.utcnow().timestamp())}.jpg"
+            fn = self.__image_dir / f"frame_{datetime.datetime.utcnow().timestamp()}.jpg"
             cv2.imwrite(str(fn), image)
 
             # process and find the buoys!

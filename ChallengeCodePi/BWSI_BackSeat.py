@@ -82,6 +82,11 @@ class BackSeat():
             ### These flags are for the test code. Remove them after the initial test!
             engine_started = False
             turned = False
+            hhmmss = datetime.datetime.fromtimestamp(self.__current_time).strftime('%H%M%S.%f')[:-4]
+            cmd = f"BPRMB,{hhmmss},,,,750,0,1"
+            msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
+            self.__logger.info("Started engine.")
+            self.send_message(msg)
             
             while self.__current_time - self.__start_time < self.__time_limit:
                 self.__logger.info(f"{self.__current_time - self.__start_time}s of {self.__time_limit}s elapsed.")
@@ -127,7 +132,7 @@ class BackSeat():
                     msg = f"${cmd}*{hex(BluefinMessages.checksum(cmd))[2:]}\n"
                     self.send_message(msg)
                     
-                time.sleep(1 / self.__warp)
+                time.sleep(0.125 / self.__warp)
                 
                 # ------------------------------------------------------------ #
                 # ----This is example code to show commands being issued
